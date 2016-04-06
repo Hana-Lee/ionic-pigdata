@@ -1,4 +1,4 @@
-angular.module('todo', ['ionic'])
+angular.module('pigdata', ['ionic'])
   /**
    * The Projects factory handles saving and loading projects
    * from local storage, and also lets us save and load the
@@ -32,7 +32,7 @@ angular.module('todo', ['ionic'])
     }
   })
 
-  .controller('TodoCtrl', function ($scope, $timeout, $ionicModal, Projects, $ionicSideMenuDelegate) {
+  .controller('PigDataCtrl', function ($scope, $timeout, $ionicModal, Projects, $ionicSideMenuDelegate) {
 
     // A utility function for creating a new project
     // with the given projectTitle

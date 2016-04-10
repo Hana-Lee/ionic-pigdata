@@ -15,17 +15,20 @@
 
   <!-- ionic/angularjs js -->
   <script src="lib/ionic/js/ionic.bundle.js"></script>
-  <script src="lib/ionic-platform-web-client/dist/ionic.io.bundle.min.js"></script>
+<script src="lib/ionic-platform-web-client/dist/ionic.io.bundle.min.js"></script>
 
   <!-- cordova script (this will be a 404 during development) -->
-  <script src="/node_modules/cordova-js/src/cordova.js"></script>
+  <!-- Cordova is bootstrapped by ionic-platform-web-client, uncomment this if you remove ionic-platform-web-client... -->
+<!-- <script src="cordova.js"></script> -->
 
+  <!-- dummy data load -->
+  <script src="data/dummy.js"></script>
   <!-- your app's js -->
   <script src="js/app.js"></script>
   <script src="js/controllers.js"></script>
   <script src="js/services.js"></script>
 </head>
-<body ng-app="starter">
+<body ng-app="PIGDATA">
 <!--
   The nav bar that will be updated as we navigate between views.
 -->

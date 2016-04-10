@@ -1,4 +1,23 @@
-angular.module('starter.services', [])
+angular.module('PIGDATA.services', [])
+
+  .factory('Items', function () {
+    return {
+      all : function () {
+        return dummy_items;
+      },
+      update : function (item) {},
+      delete : function (item) {},
+      create : function (item) {},
+      get : function (itemId) {
+        for (var i = 0; i < dummy_items.length; i++) {
+          if (dummy_items[i].id === parseInt(itemId, 10)) {
+            return dummy_items[i];
+          }
+        }
+        return null;
+      }
+    };
+  })
 
   .factory('Chats', function () {
     // Might use a resource here that returns a JSON array

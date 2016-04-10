@@ -1,6 +1,16 @@
-angular.module('starter.controllers', [])
+angular.module('PIGDATA.controllers', [])
 
-  .controller('DashCtrl', function ($scope) {
+  .controller('DashCtrl', function ($scope, Items) {
+    $scope.items = Items.all();
+    $scope.update = function (item) {
+      Items.update(item);
+    };
+    $scope.delete = function (item) {
+      Items.delete(item);
+    };
+    $scope.create = function (item) {
+      Items.create(item);
+    };
   })
 
   .controller('ChatsCtrl', function ($scope, Chats) {

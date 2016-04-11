@@ -1,12 +1,15 @@
 <ion-view view-title="PIGDATA">
+  <ion-nav-bar class="bar-dark"></ion-nav-bar>
   <ion-content>
+    <ion-input class="text-center font_bold">
+      <ion-item ng-click="showDatePicker()">{{selectedTimestamp | date : 'yyyy-MM-dd'}}</ion-item>
+    </ion-input>
     <ion-list>
       <ion-item
         ng-repeat="item in items"
-        type="item-text-wrap"
-        class="item-remove-animate">
+        class="item-remove-animate" ng-click="showDatePicker()">
         <h2>{{item.name}}</h2>
-        <p>{{item.data[0].count}} {{item.data[0].time | date:'yyyy-MM-dd'}}</p>
+        <p>{{item.data[0].count}}</p>
         <ion-option-button class="button-assertive" ng-click="remove(item)">
           Delete
         </ion-option-button>

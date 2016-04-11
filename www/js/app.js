@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('PIGDATA', ['ionic','ionic.service.core', 'PIGDATA.controllers', 'PIGDATA.services'])
+angular.module('PIGDATA', ['ionic', 'ionic.service.core', 'PIGDATA.main-controller', 'PIGDATA.controllers', 'PIGDATA.services'])
 
   .run(function ($ionicPlatform) {
     $ionicPlatform.ready(function () {
@@ -44,8 +44,8 @@ angular.module('PIGDATA', ['ionic','ionic.service.core', 'PIGDATA.controllers', 
         url : '/dash',
         views : {
           'tab-dash' : {
-            templateUrl : 'templates/tab-dash.html',
-            controller : 'DashCtrl'
+            templateUrl : 'templates/tab-main.html',
+            controller : 'MainCtrl'
           }
         }
       })

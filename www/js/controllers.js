@@ -1,17 +1,4 @@
-angular.module('PIGDATA.controllers', [])
-
-  .controller('DashCtrl', function ($scope, Items) {
-    $scope.items = Items.all();
-    $scope.update = function (item) {
-      Items.update(item);
-    };
-    $scope.delete = function (item) {
-      Items.delete(item);
-    };
-    $scope.create = function (item) {
-      Items.create(item);
-    };
-  })
+angular.module('PIGDATA.controllers', ['ionic-datepicker'])
 
   .controller('ChatsCtrl', function ($scope, Chats) {
     // With the new view caching in Ionic, Controllers are only called

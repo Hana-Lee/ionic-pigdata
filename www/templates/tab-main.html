@@ -1,18 +1,33 @@
 <ion-view view-title="PIGDATA">
-  <ion-nav-bar class="bar-dark"></ion-nav-bar>
-  <ion-content>
+  <ion-nav-bar class="bar-dark">
+    <ion-nav-buttons side="primary">
+      <button class="button">EDIT</button>
+    </ion-nav-buttons>
+  </ion-nav-bar>
+  <ion-content padding="false">
     <ion-input class="text-center font_bold">
       <ion-item ng-click="showDatePicker()">{{selectedTimestamp | date : 'yyyy-MM-dd'}}</ion-item>
     </ion-input>
     <ion-list>
       <ion-item
         ng-repeat="item in items"
-        class="item-remove-animate" ng-click="showDatePicker()">
-        <h2>{{item.name}}</h2>
-        <p>{{item.data[0].count}}</p>
-        <ion-option-button class="button-assertive" ng-click="remove(item)">
-          Delete
-        </ion-option-button>
+        class="item-remove-animate">
+        <div class="row padding_zero">
+          <div class="col">
+            <h2>{{item.name}}</h2>
+            <p>횟수 : {{item.data[0].count}}</p>
+          </div>
+          <div class="col padding_zero">
+            <div class="button-bar">
+              <a class="button button-positive">
+                <i class="icon ion-ios-plus"></i>
+              </a>
+              <a class="button button-assertive">
+                <i class="icon ion-ios-minus"></i>
+              </a>
+            </div>
+          </div>
+        </div>
       </ion-item>
     </ion-list>
   </ion-content>

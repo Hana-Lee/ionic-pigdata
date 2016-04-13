@@ -2,7 +2,7 @@
  * @author Hana Lee
  * @since 2016-04-11 21:54
  */
-angular.module('PIGDATA.main-controller', ['ionic-datepicker'])
+angular.module('PIGDATA.main-controller', ['ionic-datepicker', 'ngCordova'])
   .config(function (ionicDatePickerProvider) {
     var datePickerObj = {
       /**
@@ -106,7 +106,7 @@ angular.module('PIGDATA.main-controller', ['ionic-datepicker'])
     ionicDatePickerProvider.configDatePicker(datePickerObj);
   })
 
-  .controller('MainCtrl', function ($scope, Items, ionicDatePicker, $ionicPopup) {
+  .controller('MainCtrl', function ($scope, Items, ionicDatePicker, $ionicPopup, $cordovaSQLite) {
     $scope.selectedTimestamp = new Date();
 
     $scope.items = Items.all();
@@ -118,6 +118,17 @@ angular.module('PIGDATA.main-controller', ['ionic-datepicker'])
     };
     $scope.create = function (item) {
       Items.create(item);
+    };
+    $scope.plus = function () {
+      if ($cordovaSQLite) {
+        $cordovaSQLite.openDB({name : 'pigdata.db'}, function (db) {
+          alert('test2');
+          db.executeSql('INSERT INTO test (name) VALUES (?)', 'hana');
+        });
+      }
+    };
+    $scope.minus = function () {
+
     };
     $scope.showDatePicker = function () {
       var showAlert = function (message) {

@@ -16,7 +16,7 @@ angular.module('PIGDATA.main-controller', ['ionic-datepicker', 'ngCordova'])
        * @optional
        * @default Set
        */
-      setLabel : '설정',
+      setLabel : '선택',
       /**
        * @type {String}
        * @optional

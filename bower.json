@@ -1,12 +1,16 @@
 {
-  "name": "HelloIonic",
-  "private": "true",
+  "name": "PIGDATA",
+  "private": true,
   "devDependencies": {
     "ionic": "driftyco/ionic-bower#1.2.4",
     "ionic-platform-web-client": "^0.7.1"
   },
   "dependencies": {
-    "ionic-datepicker": "^1.1.0",
-    "ngCordova": "^0.1.26-alpha"
+    "ionic-datepicker": "^1.1.0"
+  },
+  "preen": {
+    "ngCordova": [
+      "dist/ng-cordova.min.js"
+    ]
   }
 }

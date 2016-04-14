@@ -7,7 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('PIGDATA', ['ionic', 'ionic.service.core', 'ngCordova', 'PIGDATA.main-controller', 'PIGDATA.controllers', 'PIGDATA.services'])
 
-  .run(function ($ionicPlatform) {
+  .run(function ($ionicPlatform, $sqliteService) {
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
@@ -19,10 +19,20 @@ angular.module('PIGDATA', ['ionic', 'ionic.service.core', 'ngCordova', 'PIGDATA.
         // org.apache.cordova.statusbar required
         StatusBar.styleDefault();
       }
+
+      //Load the Pre-populated database, debug = true
+      $sqliteService.preloadDataBase(true);
     });
   })
 
-  .config(function ($stateProvider, $urlRouterProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $compileProvider) {
+
+    $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|blob|content|ms-appx|x-wmapp0):|data:image\/|img\//);
+    $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|ghttps?|ms-appx|x-wmapp0):/);
+
+    if (ionic.Platform.isIOS()) {
+      $ionicConfigProvider.scrolling.jsScrolling(true);
+    }
 
     // Ionic uses AngularUI Router which uses the concept of states
     // Learn more here: https://github.com/angular-ui/ui-router

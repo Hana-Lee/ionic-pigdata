@@ -7,7 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('PIGDATA', ['ionic', 'ionic.service.core', 'ngCordova', 'PIGDATA.main-controller', 'PIGDATA.controllers', 'PIGDATA.services'])
 
-  .run(function ($ionicPlatform, $cordovaSQLite) {
+  .run(function ($ionicPlatform) {
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
@@ -18,12 +18,6 @@ angular.module('PIGDATA', ['ionic', 'ionic.service.core', 'ngCordova', 'PIGDATA.
       if (window.StatusBar) {
         // org.apache.cordova.statusbar required
         StatusBar.styleDefault();
-      }
-
-      if ($cordovaSQLite && $cordovaSQLite.openDatabase) {
-        $cordovaSQLite.openDB({ name: 'pigdata.db' }, function (db) {
-          db.executeSql('CREATE TABLE IF NOT EXISTS test (id integer primary key, name text)');
-        });
       }
     });
   })

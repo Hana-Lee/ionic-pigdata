@@ -16,19 +16,19 @@ angular.module('PIGDATA.main-controller', ['ionic-datepicker', 'ngCordova'])
        * @optional
        * @default Set
        */
-      setLabel : 'Set',
+      setLabel : '설정',
       /**
        * @type {String}
        * @optional
        * @default Today
        */
-      todayLabel : 'Today',
+      todayLabel : '오늘',
       /**
        * @type {String}
        * @optional
        * @default Close
        */
-      closeLabel : 'Close', // optional - default 'Close'
+      closeLabel : '닫기', // optional - default 'Close'
       /**
        * @type {Boolean}
        * @optional
@@ -38,15 +38,15 @@ angular.module('PIGDATA.main-controller', ['ionic-datepicker', 'ngCordova'])
       /**
        * @type {String[]}
        * @optional
-       * @default ["S", "M", "T", "W", "T", "F", "S"]
+       * @default ['S', 'M', 'T', 'W', 'T', 'F', 'S']
        */
-      weeksList : ["S", "M", "T", "W", "T", "F", "S"],
+      weeksList : ['일', '월', '화', '수', '목', '금', '토'],
       /**
        * @type {String[]}
        * @optional
-       * @default ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+       * @default ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
        */
-      monthsList : ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"],
+      monthsList : ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
       /**
        * @type {Date[]}
        * @optional
@@ -106,7 +106,7 @@ angular.module('PIGDATA.main-controller', ['ionic-datepicker', 'ngCordova'])
     ionicDatePickerProvider.configDatePicker(datePickerObj);
   })
 
-  .controller('MainCtrl', function ($scope, Items, ionicDatePicker, $ionicPopup, $cordovaSQLite) {
+  .controller('MainCtrl', function ($scope, Items, ionicDatePicker, $ionicPopup) {
     $scope.selectedTimestamp = new Date();
 
     $scope.items = Items.all();
@@ -120,12 +120,6 @@ angular.module('PIGDATA.main-controller', ['ionic-datepicker', 'ngCordova'])
       Items.create(item);
     };
     $scope.plus = function () {
-      if ($cordovaSQLite) {
-        $cordovaSQLite.openDB({name : 'pigdata.db'}, function (db) {
-          alert('test2');
-          db.executeSql('INSERT INTO test (name) VALUES (?)', 'hana');
-        });
-      }
     };
     $scope.minus = function () {
 

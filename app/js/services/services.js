@@ -5,9 +5,12 @@ angular.module('PIGDATA.services', [])
       all : function () {
         return dummy_items;
       },
-      update : function (item) {},
-      delete : function (item) {},
-      create : function (item) {},
+      update : function (item) {
+      },
+      delete : function (item) {
+      },
+      create : function (item) {
+      },
       get : function (itemId) {
         for (var i = 0; i < dummy_items.length; i++) {
           if (dummy_items[i].id === parseInt(itemId, 10)) {

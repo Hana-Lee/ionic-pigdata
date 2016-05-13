@@ -1,15 +1,15 @@
 (function () {
-	'use strict';
+  'use strict';
 
-	angular
-		.module('PIGDATA')
-		.factory('Model', Model);
+  angular
+    .module('PIGDATA')
+    .factory('Model', Model);
 
-	Model.$inject = ['Users'];
-	function Model(Users) {
+  Model.$inject = ['Users'];
+  function Model(Users) {
 
-		return {
-			Users: Users
-		};
-	}
+    return {
+      Users : Users
+    };
+  }
 })();

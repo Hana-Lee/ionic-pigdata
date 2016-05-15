@@ -1,3 +1,8 @@
+/**
+ * @author Hana Lee
+ * @since 2016-05-14 20:38
+ */
+
 (function () {
   'use strict';
 

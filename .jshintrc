@@ -52,12 +52,15 @@
 
   "browser": true,
   "node": true,
+  "jasmine": true,
+  "mocha": true,
 
   "globals": {
     "angular": false,
     "cordova": false,
     "translateChat": false,
     "io": false,
-    "ionic": false
+    "ionic": false,
+    "inject": false
   }
 }

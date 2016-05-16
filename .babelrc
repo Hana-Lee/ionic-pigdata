@@ -1,5 +1,1 @@
-{
-  "presets": ["es2015"],
-  "moduleIds": "true",
-  "plugins": ["transform-es2015-modules-amd"]
-}
+{"presets":["es2015"]}

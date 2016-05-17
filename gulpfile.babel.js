@@ -111,5 +111,5 @@ gulp.task('default', () => {
 
 // Start server
 gulp.task('server', (done) => {
-  sync('default', 'serve', done);
+  sync('default', 'watch', 'serve', done);
 });

@@ -9,6 +9,9 @@ import template from 'gulp-template';
 import yargs from 'yargs';
 import sass from 'gulp-sass';
 import minifyCss from 'gulp-minify-css';
+import preen from 'preen';
+import notify from 'gulp-notify';
+import util from 'gulp-util';
 
 let reload = () => serve.reload();
 let root = 'www';
@@ -89,6 +92,12 @@ gulp.task('sass', () => {
     .pipe(gulp.dest('./www/css/'));
 });
 
+gulp.task('preen', () => {
+  preen.preen({}, () => {
+    gulp.src('').pipe(notify({message : 'Lib builded'}));
+  });
+});
+
 // Watching all files and reload server
 gulp.task('watch', () => {
   let allPaths = [].concat([paths.js], paths.html, [paths.sass]);
@@ -96,8 +105,8 @@ gulp.task('watch', () => {
 });
 
 // Start all tasks
-gulp.task('default', (done) => {
-  sync('webpack', 'watch', 'sass', done);
+gulp.task('default', () => {
+  sync('webpack', 'sass', 'preen');
 });
 
 // Start server

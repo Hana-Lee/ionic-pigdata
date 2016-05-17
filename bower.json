@@ -6,5 +6,16 @@
     "ionic-platform-web-client": "^0.7.1",
     "ionic-datepicker": "^1.1.0",
     "ngCordova": "^0.1.26-alpha"
+  },
+  "preen" : {
+    "ngCordova" : [
+      "dist/ng-cordova.min.js"
+    ],
+    "ionic-platform-web-client": [
+      "dist/ionic.io.bundle.*"
+    ],
+    "ionic-datepicker":[
+      "dist/ionic-datepicker.bundle.*"
+    ]
   }
 }

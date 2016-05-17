@@ -344,3 +344,4 @@ nbactions.xml
 .Trash-*
 
 www/lib
+www/bundle.*

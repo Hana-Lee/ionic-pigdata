@@ -18,14 +18,6 @@
     "url": ""
   },
   "dependencies": {
-    "angular": "^1.5.5",
-    "angular-resource": "^1.5.5",
-    "angular-ui-router": "^0.3.0",
-    "cordova-common": "^1.2.0",
-    "ionic-datepicker": "^1.1.0",
-    "ionic-platform-web-client": "^0.7.1",
-    "ionic-sdk": "^1.2.4",
-    "ng-cordova": "^0.1.26-alpha",
     "normalize.css": "^4.1.1",
     "underscore": "^1.8.3",
     "xcode": "^0.8.5"
@@ -88,7 +80,8 @@
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
     "ionic-plugin-keyboard",
-    "ionic-plugin-deploy"
+    "ionic-plugin-deploy",
+    "cordova-plugin-datepicker"
   ],
   "cordovaPlatforms": [
     "android",

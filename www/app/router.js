@@ -15,8 +15,8 @@ let router = function ($urlRouterProvider, $ionicConfigProvider, $compileProvide
   }
 
   function _configWhiteList() {
-    var imgSrcSanitizationWhitelist = /^\s*(https?|ftp|file|blob|content|ms-appx|x-wmapp0):|data:image\/|img\//;
-    var aHrefSanitizationWhitelist = /^\s*(https?|ftp|mailto|file|ghttps?|ms-appx|x-wmapp0):/;
+    let imgSrcSanitizationWhitelist = /^\s*(https?|ftp|file|blob|content|ms-appx|x-wmapp0):|data:image\/|img\//;
+    let aHrefSanitizationWhitelist = /^\s*(https?|ftp|mailto|file|ghttps?|ms-appx|x-wmapp0):/;
 
     $compileProvider.imgSrcSanitizationWhitelist(imgSrcSanitizationWhitelist);
     $compileProvider.aHrefSanitizationWhitelist(aHrefSanitizationWhitelist);
@@ -27,14 +27,14 @@ let router = function ($urlRouterProvider, $ionicConfigProvider, $compileProvide
      * @prop {Function} isIOS
      * @prop {Function} isWindowsPhone
      */
-    var platform = ionic.Platform;
+    let platform = ionic.Platform;
     if (platform.isIOS()) {
       $ionicConfigProvider.scrolling.jsScrolling(true);
     }
   }
 
   function _configDatePicker() {
-    var datePickerObj = {
+    let datePickerObj = {
       /**
        * @type {Date}
        * @optional

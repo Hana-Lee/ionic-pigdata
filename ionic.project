@@ -1,13 +1,4 @@
 {
   "name": "pigdata",
   "app_id": "104d5341"
-  //,"gulpStartupTasks": [
-  //  "sass",
-  //  "scripts",
-  //  "watch"
-  //],
-  //"watchPatterns": [
-  //  "www/**/*",
-  //  "!www/lib/**/*"
-  //]
 }

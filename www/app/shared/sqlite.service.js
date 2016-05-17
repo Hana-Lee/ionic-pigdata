@@ -23,7 +23,6 @@ var queries = [
 
 class SqliteService {
   constructor($q, $cordovaSQLite) {
-    this.$inject = ['$q', '$cordovaSQLite'];
 
     var self = this;
     var _db;

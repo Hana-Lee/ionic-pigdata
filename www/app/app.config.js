@@ -4,10 +4,10 @@
  */
 
 let router = function ($urlRouterProvider, $ionicConfigProvider, $compileProvider,
-                ionicDatePickerProvider) {
+                       ionicDatePickerProvider) {
   _configRouter();
   _configWhiteList();
-  _configScrolling();
+  _configDefault();
   _configDatePicker();
 
   function _configRouter() {
@@ -22,7 +22,10 @@ let router = function ($urlRouterProvider, $ionicConfigProvider, $compileProvide
     $compileProvider.aHrefSanitizationWhitelist(aHrefSanitizationWhitelist);
   }
 
-  function _configScrolling() {
+  function _configDefault() {
+    $ionicConfigProvider.tabs.position('bottom');
+    $ionicConfigProvider.navBar.alignTitle('center');
+
     /**
      * @prop {Function} isIOS
      * @prop {Function} isWindowsPhone

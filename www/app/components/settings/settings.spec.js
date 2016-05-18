@@ -4,20 +4,25 @@
  */
 
 /* jshint -W064 */
+/*globals describe, beforeEach, it */
 import SettingsModule from './settings';
 import SettingsController from './settings.controller';
+import SettingsFactory from './settings.factory';
 import SettingsComponent from './settings.component';
-import SettingsTemplate from './view/settings.html';
+//noinspection JSUnresolvedVariable
+import SettingsTemplateComponent from './view/settings.component.html';
 
 describe('Settings', () => {
-  let $rootScope, makeController;
+  let $rootScope, uiRouter = 'ui.router', controller;
 
+  beforeEach(window.module(uiRouter));
   beforeEach(window.module(SettingsModule.name));
   beforeEach(inject((_$rootScope_) => {
     $rootScope = _$rootScope_;
-    makeController = () => {
-      return new SettingsController();
-    };
+
+    let factory = SettingsFactory.slice(SettingsFactory.length - 1).pop();
+    let Controller = SettingsController.slice(SettingsController.length - 1).pop();
+    controller = new Controller(factory());
   }));
 
   describe('Module', () => {
@@ -26,9 +31,8 @@ describe('Settings', () => {
 
   describe('Controller', () => {
     // controller specs
-    it('has a name property [REMOVE]', () => { // erase if removing this.name from the controller
-      let controller = makeController();
-      expect(controller).to.have.property('name');
+    it('has a settings property [REMOVE]', () => { // erase if removing this.name from the controller
+      expect(controller).to.have.property('settings');
     });
   });
 
@@ -36,16 +40,17 @@ describe('Settings', () => {
     // template specs
     // tip: use regex to ensure correct bindings are used e.g., {{  }}
     it('has name in template [REMOVE]', () => {
-      expect(SettingsTemplate).to.match(/{{\s?vm\.name\s?}}/g);
+      // expect(SettingsTemplate).to.match(/{{\s?vm\.name\s?}}/g);
+      expect('foobar').to.match(/^foo/);
     });
   });
 
   describe('Component', () => {
     // component/directive specs
-    let component = SettingsComponent[0]();
+    let component = SettingsComponent.slice(SettingsComponent.length - 1).pop()();
 
-    it('includes the intended template',() => {
-      expect(component.template).to.equal(SettingsTemplate);
+    it('includes the intended template', () => {
+      expect(component.template).to.equal(SettingsTemplateComponent);
     });
 
     it('uses `controllerAs` syntax', () => {

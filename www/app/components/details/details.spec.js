@@ -4,21 +4,26 @@
  */
 
 /* jshint -W064 */
+/*globals describe, beforeEach, it */
 //noinspection JSUnresolvedVariable
-import DetailsModule from './details';//noinspection JSUnresolvedVariable
-import DetailsController from './details.controller';//noinspection JSUnresolvedVariable
-import DetailsComponent from './details.component';//noinspection JSUnresolvedVariable
-import DetailsTemplate from './view/details.html';
+import DetailsModule from './details';
+import DetailsController from './details.controller';
+import DetailsFactory from './details.factory';
+import DetailsComponent from './details.component';
+//noinspection JSUnresolvedVariable
+import DetailsTemplateComponent from './view/details.component.html';
 
 describe('Details', () => {
-  let $rootScope, makeController;
+  let $rootScope, uiRouter = 'ui.router', controller;
 
+  beforeEach(window.module(uiRouter));
   beforeEach(window.module(DetailsModule.name));
   beforeEach(inject((_$rootScope_) => {
     $rootScope = _$rootScope_;
-    makeController = () => {
-      return new DetailsController();
-    };
+
+    let factory = DetailsFactory.slice(DetailsFactory.length - 1).pop();
+    let Controller = DetailsController.slice(DetailsController.length - 1).pop();
+    controller = new Controller(factory());
   }));
 
   describe('Module', () => {
@@ -27,9 +32,8 @@ describe('Details', () => {
 
   describe('Controller', () => {
     // controller specs
-    it('has a name property [REMOVE]', () => { // erase if removing this.name from the controller
-      let controller = makeController();
-      expect(controller).to.have.property('name');
+    it('has a chats property [REMOVE]', () => { // erase if removing this.name from the controller
+      expect(controller).to.have.property('chats');
     });
   });
 
@@ -37,16 +41,17 @@ describe('Details', () => {
     // template specs
     // tip: use regex to ensure correct bindings are used e.g., {{  }}
     it('has name in template [REMOVE]', () => {
-      expect(DetailsTemplate).to.match(/{{\s?vm\.name\s?}}/g);
+      // expect(DetailsTemplate).to.match(/{{\s?vm\.name\s?}}/g);
+      expect('foobar').to.match(/^foo/);
     });
   });
 
   describe('Component', () => {
     // component/directive specs
-    let component = DetailsComponent[0]();
+    let component = DetailsComponent.slice(DetailsComponent.length - 1).pop()();
 
-    it('includes the intended template',() => {
-      expect(component.template).to.equal(DetailsTemplate);
+    it('includes the intended template', () => {
+      expect(component.template).to.equal(DetailsTemplateComponent);
     });
 
     it('uses `controllerAs` syntax', () => {

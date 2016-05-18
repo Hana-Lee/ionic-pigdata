@@ -9,6 +9,7 @@
   },
   "preen" : {
     "ngCordova" : [
+      "dist/ng-cordova.js",
       "dist/ng-cordova.min.js"
     ],
     "ionic-platform-web-client": [

@@ -10,9 +10,9 @@ module.exports = function (config) {
     // list of files/patterns to load in the browser
     files : [
       './www/lib/ionic/js/ionic.bundle.js',
-      // './www/lib/ionic-platform-web-client/dist/ionic.io.bundle.js',
-      // './www/lib/ngCordova/dist/ng-cordova.js',
-      // './www/lib/ionic-datepicker/dist/ionic-datepicker.bundle.min.js',
+      './www/lib/ionic-platform-web-client/dist/ionic.io.bundle.js',
+      './www/lib/ngCordova/dist/ng-cordova.js',
+      './www/lib/ionic-datepicker/dist/ionic-datepicker.bundle.min.js',
       {pattern : 'spec.bundle.js', watched : false}
     ],
 

@@ -5,7 +5,7 @@
   "license": "MIT",
   "author": "Hana Lee",
   "scripts": {
-    "test": "./node_modules/.bin/karma start --single-run --browsers Firefox"
+    "test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS2"
   },
   "keywords": [
     "pigdata",

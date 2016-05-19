@@ -6,3 +6,5 @@
 
 ## 사용언어
 * cordova 기반 ionic framework
+
+> [ES6](https://github.com/lukehoban/es6features#readme) + [Webpack](https://webpack.github.io/) + [NG6](https://github.com/AngularClass/NG6-starter)

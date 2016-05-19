@@ -23,6 +23,7 @@ module.exports = function (config) {
       require('karma-chai'),
       require('karma-chrome-launcher'),
       require('karma-phantomjs2-launcher'),
+      require('karma-firefox-launcher'),
       require('karma-mocha'),
       require('karma-mocha-reporter'),
       require('karma-sourcemap-loader'),

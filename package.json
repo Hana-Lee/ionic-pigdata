@@ -5,7 +5,7 @@
   "license": "MIT",
   "author": "Hana Lee",
   "scripts": {
-    "test": "karma start"
+    "test": "./node_modules/.bin/karma start --single-run --browsers Firefox"
   },
   "keywords": [
     "pigdata",
@@ -52,6 +52,7 @@
     "karma": "^0.13.22",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^1.0.1",
+    "karma-firefox-launcher": "^1.0.0",
     "karma-mocha": "^1.0.1",
     "karma-mocha-reporter": "^2.0.3",
     "karma-phantomjs2-launcher": "^0.5.0",

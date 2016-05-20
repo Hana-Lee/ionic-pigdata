@@ -7,10 +7,12 @@ import SqliteService from './shared/sqlite.service.js';
 import Components from './components/components';
 import onReady from './bootstrap';
 import config from './app.config';
+import QUERIES from './shared/queries.constant';
 
-let mainModuleList = ['ionic', 'ngCordova', 'ionic-datepicker', Components.name];
+let moduleList = ['ionic', 'ngCordova', 'ionic-datepicker', Components.name];
 
-angular.module('PIGDATA', mainModuleList)
+angular.module('PIGDATA', moduleList)
+  .constant('QUERIES', QUERIES)
   .run(onReady)
   .config(config)
   .service('SqliteService', SqliteService);

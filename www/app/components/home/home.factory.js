@@ -3,137 +3,37 @@
  * @since 2016-05-16 16:25
  */
 
-let homeFactory = function () {
+import Item from '../../shared/item.vo';
 
-  let resources = [{
-    id : 1,
-    name : '영어 단어 외우기',
-    data : [{
-      type : 2,
-      count : 10,
-      time : 1460254605573 - 86400000 * 4
-    }, {
-      type : 2,
-      count : 14,
-      time : 1460254605573 - 86400000 * 3
-    }, {
-      type : 2,
-      count : 11,
-      time : 1460254605573 - 86400000 * 2
-    }, {
-      type : 2,
-      count : 9,
-      time : 1460254605573 - 86400000
-    }, {
-      type : 2,
-      count : 13,
-      time : 1460254605573
-    }]
-  }, {
-    id : 2,
-    name : '영어 문장 외우기',
-    data : [{
-      type : 2,
-      count : 10,
-      time : 1460254605573 - 86400000 * 4
-    }, {
-      type : 2,
-      count : 14,
-      time : 1460254605573 - 86400000 * 3
-    }, {
-      type : 2,
-      count : 11,
-      time : 1460254605573 - 86400000 * 2
-    }, {
-      type : 2,
-      count : 9,
-      time : 1460254605573 - 86400000
-    }, {
-      type : 2,
-      count : 13,
-      time : 1460254605573
-    }]
-  }, {
-    id : 3,
-    name : '커피 마시기',
-    data : [{
-      type : 2,
-      count : 10,
-      time : 1460254605573 - 86400000 * 4
-    }, {
-      type : 2,
-      count : 14,
-      time : 1460254605573 - 86400000 * 3
-    }, {
-      type : 2,
-      count : 11,
-      time : 1460254605573 - 86400000 * 2
-    }, {
-      type : 2,
-      count : 9,
-      time : 1460254605573 - 86400000
-    }, {
-      type : 2,
-      count : 13,
-      time : 1460254605573
-    }]
-  }, {
-    id : 4,
-    name : '물 마시기',
-    data : [{
-      type : 2,
-      count : 10,
-      time : 1460254605573 - 86400000 * 4
-    }, {
-      type : 2,
-      count : 14,
-      time : 1460254605573 - 86400000 * 3
-    }, {
-      type : 2,
-      count : 11,
-      time : 1460254605573 - 86400000 * 2
-    }, {
-      type : 2,
-      count : 9,
-      time : 1460254605573 - 86400000
-    }, {
-      type : 2,
-      count : 13,
-      time : 1460254605573
-    }]
-  }, {
-    id : 5,
-    name : '화장실 가기',
-    data : [{
-      type : 2,
-      count : 10,
-      time : 1460254605573 - 86400000 * 4
-    }, {
-      type : 2,
-      count : 14,
-      time : 1460254605573 - 86400000 * 3
-    }, {
-      type : 2,
-      count : 11,
-      time : 1460254605573 - 86400000 * 2
-    }, {
-      type : 2,
-      count : 9,
-      time : 1460254605573 - 86400000
-    }, {
-      type : 2,
-      count : 13,
-      time : 1460254605573
-    }]
-  }];
+let homeFactory = function ($q, SqliteService, QUERIES) {
 
-  return {
-    all : all
+  let getAllItem = function () {
+    var deferred = $q.defer();
+    //noinspection JSUnresolvedFunction
+    SqliteService.getItems(QUERIES.SELECT_ALL_ITEMS).then((items) => {
+      let results = [];
+      for (let i of items) {
+        results.push(new Item(i.id, i.valueId, i.seq, i.name, i.unit, i.value));
+      }
+      deferred.resolve(results);
+    });
+
+    return deferred.promise;
   };
 
-  function all() {
-    return resources;
-  }
+  let createItemValue = function (item) {
+
+  };
+
+  let updateItemValue = function (item) {
+
+  };
+
+  return {
+    getAllItem : getAllItem,
+    createItemValue : createItemValue,
+    updateItemValue : updateItemValue
+  };
 };
 
-export default [homeFactory];
+export default ['$q', 'SqliteService', 'QUERIES', homeFactory];

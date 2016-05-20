@@ -8,9 +8,9 @@
  * run our tests, Webpack, likewise, compiles and bundles those tests here.
 */
 
-import angular from 'angular';
+// import angular from 'angular';
 // Built by the core Angular team for mocking dependencies
-import mocks from 'angular-mocks';
+// import mocks from 'angular-mocks';
 
 // We use the context method on `require` which Webpack created
 // in order to signify which files we actually want to require or import.

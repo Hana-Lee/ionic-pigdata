@@ -1,25 +1,33 @@
-<ion-input class="text-center font_bold">
-  <ion-item ng-click="vm.showDatePicker()">{{vm.selectedTimestamp | date : 'yyyy-MM-dd'}}</ion-item>
-</ion-input>
-<ion-list>
-  <ion-item
-    ng-repeat="item in vm.items"
-    class="item-remove-animate">
-    <div class="row padding_zero">
-      <div class="col">
-        <h2>{{item.name}}</h2>
-        <p>횟수 : {{item.data[0].count}}</p>
-      </div>
-      <div class="col padding_zero">
-        <div class="button-bar">
-          <a class="button button-positive" ng-click="vm.plus()">
-            <i class="icon ion-ios-plus"></i>
-          </a>
-          <a class="button button-assertive" ng-click="vm.minus()">
-            <i class="icon ion-ios-minus"></i>
-          </a>
+<ion-nav-bar class="bar-dark">
+  <ion-nav-buttons side="right">
+    <button class="button" ng-click="vm.addItem()">추가</button>
+  </ion-nav-buttons>
+</ion-nav-bar>
+<ion-content padding="false">
+  <ion-input class="text-center font_bold">
+    <ion-item ng-click="vm.showDatePicker()">{{vm.selectedTimestamp | date : 'yyyy-MM-dd'}}</ion-item>
+  </ion-input>
+  <ion-list>
+    <ion-item
+      ng-repeat="item in vm.items"
+      ng-click="vm.showItemInfo(item)"
+      class="item-remove-animate">
+      <div class="row padding_zero">
+        <div class="col">
+          <h2>{{item.name}}</h2>
+          <p>횟수 : {{item.value}}</p>
+        </div>
+        <div class="col padding_zero">
+          <div class="button-bar">
+            <a class="button button-positive" ng-click="vm.plus($event)">
+              <i class="icon ion-ios-plus"></i>
+            </a>
+            <a class="button button-assertive" ng-click="vm.minus($event)">
+              <i class="icon ion-ios-minus"></i>
+            </a>
+          </div>
         </div>
       </div>
-    </div>
-  </ion-item>
-</ion-list>
+    </ion-item>
+  </ion-list>
+</ion-content>

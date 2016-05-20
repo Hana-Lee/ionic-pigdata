@@ -14,7 +14,7 @@ class SqliteService {
       '`id` INTEGER NOT NULL,' +
       '`seq` INTEGER NOT NULL UNIQUE,' +
       '`name` VARCHAR(255) NOT NULL,' +
-      '`unit` TINYINT NOT NULL DEFAULT (1), -- 데이터 증가 또는 감소 단위 (1, 5 10)' +
+      '`unit` TINYINT NOT NULL DEFAULT (1),' +
       '`enabled` TINYINT NOT NULL DEFAULT (1),' +
       '`created` TIMESTAMP NOT NULL DEFAULT (STRFTIME(\'%s\', \'now\') || \'000\'),' +
       '`updated` TIMESTAMP NOT NULL DEFAULT (STRFTIME(\'%s\', \'now\') || \'000\'),' +
@@ -42,7 +42,8 @@ class SqliteService {
       '`name` VARCHAR(50) NOT NULL,' +
       '`type` VARCHAR(20) NOT NULL DEFAULT (\'boolean\'),' +
       '`opt_code` VARCHAR(255) NOT NULL DEFAULT (\'true|false\'),' +
-      '`opt_name` VARCHAR(255) NOT NULL DEFAULT (\'true\'),' +
+      '`opt_name` VARCHAR(255) NOT NULL DEFAULT (\'true|false\'),' +
+      '`value` VARCHAR(255) NOT NULL DEFAULT (\'true\'),' +
       '`created` TIMESTAMP NOT NULL DEFAULT (STRFTIME(\'%s\', \'now\') || \'000\'),' +
       '`updated` TIMESTAMP NOT NULL DEFAULT (STRFTIME(\'%s\', \'now\') || \'000\'),' +
       'PRIMARY KEY (`id`)' +
@@ -63,6 +64,7 @@ class SqliteService {
       'INSERT INTO `Settings` (`code`, `name`, `type`, `opt_code`, `opt_name`, `value`) VALUES' +
       '(\'tab_position\', \'탭위치\', \'choice\', \'top|bottom\', \'상단|하단\', \'bottom\');'
     ];
+    this.preloadDataBase();
   }
 
   preloadDataBase() {
@@ -89,16 +91,16 @@ class SqliteService {
     let deferred = this._$q.defer();
     console.info('%c *** Starting the creation of the database in the browser *** ',
       'background: #222; color: #bada55');
-    this._db.transaction(function (tx) {
+    this._db.transaction((tx) => {
       for (let i = 0; i < this._INIT_QUERIES.length; i++) {
         let query = this._INIT_QUERIES[i].replace(/\\n/g, '\n');
 
         console.info(this._INIT_QUERIES[i]);
         tx.executeSql(query);
       }
-    }, function (error) {
+    }, (error) => {
       deferred.reject(error);
-    }, function () {
+    }, () => {
       console.info('%c *** Completing the creation of the database in the browser *** ',
         'background: #222; color: #bada55');
       deferred.resolve('OK');
@@ -112,13 +114,13 @@ class SqliteService {
     this.executeSql(query, parameters).then(function (res) {
 
       if (res.rows.length > 0) {
-        return deferred.resolve(res.rows.item(0));
+        deferred.resolve(res.rows.item(0));
       } else {
         console.error('There aren\'t item matching : ', query, parameters);
-        return deferred.resolve(null);
+        deferred.resolve(null);
       }
     }, function (err) {
-      return deferred.reject(err);
+      deferred.reject(err);
     });
 
     return deferred.promise;
@@ -126,20 +128,20 @@ class SqliteService {
 
   getItems(query, parameters) {
     let deferred = this._$q.defer();
-    this.executeSql(query, parameters).then(function (res) {
+    this.executeSql(query, parameters).then((res) => {
       let rowsLength = res.rows.length;
       if (rowsLength > 0) {
         let items = [];
         for (let i = 0; i < res.rows.length; i++) {
           items.push(res.rows.item(i));
         }
-        return deferred.resolve(items);
+        deferred.resolve(items);
       } else {
         console.error('There aren\'t items matching : ', query, parameters);
-        return deferred.resolve(null);
+        deferred.resolve(null);
       }
-    }, function (err) {
-      return deferred.reject(err);
+    }, (err) => {
+      deferred.reject(err);
     });
 
     return deferred.promise;

@@ -9,21 +9,40 @@ module.exports = function (config) {
 
     // list of files/patterns to load in the browser
     files : [
-      './www/lib/ionic/js/ionic.bundle.js',
-      // './www/lib/ionic-platform-web-client/dist/ionic.io.bundle.js',
-      // './www/lib/ngCordova/dist/ng-cordova.js',
-      // './www/lib/ionic-datepicker/dist/ionic-datepicker.bundle.min.js',
-      {pattern : 'spec.bundle.js', watched : false}
+      {
+        pattern : './www/lib/ionic/js/ionic.bundle.js',
+        watched : false, include : true, served : true, nocache : false
+      },
+      {
+        pattern : './www/lib/ionic-platform-web-client/dist/ionic.io.bundle.js',
+        watched : false, include : true, served : true, nocache : false
+      },
+      {
+        pattern : './www/lib/ngCordova/dist/ng-cordova.js',
+        watched : false, include : true, served : true, nocache : false
+      },
+      {
+        pattern : './www/lib/ionic-datepicker/dist/ionic-datepicker.bundle.min.js',
+        watched : false, include : true, served : true, nocache : false
+      },
+      {
+        pattern : './node_modules/angular-mocks/angular-mocks.js',
+        watched : false, include : true, served : true, nocache : false
+      },
+      {
+        pattern : 'spec.bundle.js',
+        watched : false, include : true, served : true, nocache : false
+      }
     ],
 
     // files to exclude
     exclude : [],
 
     plugins : [
-      require('karma-chai'),
       require('karma-chrome-launcher'),
       require('karma-phantomjs2-launcher'),
       require('karma-firefox-launcher'),
+      require('karma-chai'),
       require('karma-mocha'),
       require('karma-mocha-reporter'),
       require('karma-sourcemap-loader'),
@@ -38,8 +57,8 @@ module.exports = function (config) {
       devtool : 'inline-source-map',
       module : {
         loaders : [
-          {test : /\.js/, exclude : [/www\/lib/, /node_modules/], loader : 'babel'},
-          {test : /\.html/, loader : 'raw'},
+          {test : /\.js$/, exclude : [/www\/lib/, /node_modules/], loader : 'babel'},
+          {test : /\.html$/, loader : 'raw'},
           {test : /\.styl$/, loader : 'style!css!stylus'},
           {test : /\.css$/, loader : 'style!css'}
         ]
@@ -68,7 +87,7 @@ module.exports = function (config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers : ['Firefox'],
+    browsers : ['PhantomJS2', 'Firefox', 'Chrome'],
 
     // if true, Karma runs tests once and exits
     singleRun : true

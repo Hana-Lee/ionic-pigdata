@@ -12,14 +12,28 @@
 class HomeController {
 
   constructor(factory, ionicDatePicker) {
-    this.items = factory.all();
+    this.factory = factory;
+    this.items = [];
     this.selectedTimestamp = new Date();
     this.ionicDatePicker = ionicDatePicker;
     this.init();
   }
 
   init() {
-    //code
+    this.factory.getAllItem().then((items) => {
+      console.info('items result : ', items);
+      this.items = items;
+    });
+  }
+
+  showItemInfo(item) {
+    event.stopPropagation();
+    console.info('show item info click', item);
+  }
+
+  addItem(event) {
+    event.stopPropagation();
+    console.info('add item click');
   }
 
   showDatePicker() {
@@ -33,13 +47,15 @@ class HomeController {
     this.selectedTimestamp = value;
   }
 
-  plus() {
+  plus(event) {
+    event.stopPropagation();
     console.info('on click plus(+) button');
   }
 
-  minus() {
+  minus(event) {
+    event.stopPropagation();
     console.info('on click minus(-) button');
   }
 }
 
-export default ['home.factory', 'ionicDatePicker', '$ionicPopup', HomeController];
+export default ['home.factory', 'ionicDatePicker', HomeController];

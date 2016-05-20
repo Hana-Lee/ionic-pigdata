@@ -10,10 +10,12 @@ import SqliteService from './sqlite.service';
 describe('SqliteService', () => {
   let service;
 
-  beforeEach(() => {
+  // beforeEach(window.module('PIGDATA'));
+
+  beforeEach(inject((_$q_) => {
     let Service = SqliteService.slice(SqliteService.length - 1).pop();
-    service = new Service();
-  });
+    service = new Service(_$q_);
+  }));
 
   describe('Service', () => {
     it('has a _$q property', () => {

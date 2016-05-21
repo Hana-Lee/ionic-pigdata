@@ -11,8 +11,8 @@ import HomeController from './home.controller';
 import HomeFactory from './home.factory';
 import HomeComponent from './home.component';
 import SqliteService from '../../shared/sqlite.service';
-//noinspection JSUnresolvedVariable
 import HomeTemplateComponent from './view/home.component.html';
+//noinspection JSUnresolvedVariable
 
 describe('Home', () => {
   let $rootScope, uiRouter = 'ui.router', controller, ionic = 'ionic', ngCordova = 'ngCordova';
@@ -51,6 +51,10 @@ describe('Home', () => {
 
     it('has a factory property', () => { // erase if removing this.name from the controller
       expect(controller).to.have.property('factory');
+    });
+
+    it('has a $ionicPopup property', () => { // erase if removing this.name from the controller
+      expect(controller).to.have.property('$ionicPopup');
     });
   });
 

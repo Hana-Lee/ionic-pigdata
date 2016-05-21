@@ -3,11 +3,21 @@
  * @since 2016-05-16 16:02
  */
 
+/**
+ * @class SqliteService
+ */
 class SqliteService {
-  constructor($q, $cordovaSQLite) {
+
+  /** @constructor */
+  constructor($q, $cordovaSQLite, QUERIES) {
+    /** @member {Object} */
     this._db = undefined;
+    /** @member {Object} */
     this._$q = $q;
+    /** @member {Object} */
     this._$cordovaSQLite = $cordovaSQLite;
+    /** @member {Object} */
+    this._QUERIES = QUERIES;
 
     const CREATE_TABLE_ITEMS =
       'CREATE TABLE IF NOT EXISTS `Items` (' +
@@ -67,6 +77,11 @@ class SqliteService {
     this.preloadDataBase();
   }
 
+  /**
+   * @memberof SqliteService.preloadDataBase
+   * @type {Method} preloadDataBase
+   * @returns {Object} promise
+   */
   preloadDataBase() {
     let deferred = this._$q.defer();
     if (!this._db) {
@@ -79,14 +94,24 @@ class SqliteService {
         console.info('window open database use');
         this._db = window.openDatabase('pigdata.db', '1.0', 'Database', 200000);
         this._initData().then(
-          (result) => {deferred.resolve(result);},
-          (err) => {deferred.reject(err);}
+          (result) => {
+            deferred.resolve(result);
+          },
+          (err) => {
+            deferred.reject(err);
+          }
         );
       }
     }
     return deferred.promise;
   }
 
+  /**
+   * @memberof SqliteService._initData
+   * @type {Method} _initData
+   * @returns {Object} promise
+   * @private
+   */
   _initData() {
     let deferred = this._$q.defer();
     console.info('%c *** Starting the creation of the database in the browser *** ',
@@ -109,6 +134,13 @@ class SqliteService {
     return deferred.promise;
   }
 
+  /**
+   * @memberof SqliteService.getItem
+   * @type {Method} getItem
+   * @param {String} query
+   * @param {Object[]} [parameters]
+   * @returns {Object} promise
+   */
   getItem(query, parameters) {
     let deferred = this._$q.defer();
     this.executeSql(query, parameters).then(function (res) {
@@ -126,6 +158,13 @@ class SqliteService {
     return deferred.promise;
   }
 
+  /**
+   * @memberof SqliteService.getItems
+   * @type {Method} getItems
+   * @param {String} query
+   * @param {Object[]} [parameters]
+   * @returns {Object} promise
+   */
   getItems(query, parameters) {
     let deferred = this._$q.defer();
     this.executeSql(query, parameters).then((res) => {
@@ -147,9 +186,86 @@ class SqliteService {
     return deferred.promise;
   }
 
+  /**
+   * @memberof SqliteService.update
+   * @type {Method} update
+   * @param {String} query
+   * @param {Object[]} [parameters]
+   *
+   * @returns {Object} promise
+   */
+  update(query, parameters) {
+    let deferred = this._$q.defer();
+
+    let queryType = this._getQueryType(query);
+    let tableName = this._extractTableName(query);
+    let selectQuery = this._getSelectQuery(tableName);
+    this._db.transaction((tx) => {
+      tx.executeSql(query, parameters, (tx, resultSet) => {
+        if (queryType === 'insert') {
+          tx.executeSql(selectQuery, [resultSet.insertId], (tx, resultSet) => {
+            if (resultSet.rows && resultSet.rows.length > 0) {
+              deferred.resolve(resultSet.rows.item(0));
+            } else {
+              deferred.resolve(null);
+            }
+          });
+        } else {
+          deferred.resolve('Update OK');
+        }
+      });
+    }, (error) => {
+      deferred.reject(error);
+    });
+
+    return deferred.promise;
+  }
+
+  //noinspection JSMethodCanBeStatic
+  /**
+   * @memberof SqliteService._extractTableName
+   * @type {Method} _extractTableName
+   * @param {String} query
+   * @returns {String} table name
+   * @private
+   */
+  _extractTableName(query) {
+    query = query.substr(query.indexOf('`') + 1);
+    query = query.substr(0, query.indexOf('`'));
+
+    return query;
+  }
+
+  _getSelectQuery(tableName) {
+    let upTableName = tableName.toUpperCase();
+    return this._QUERIES[upTableName].SELECT_BY_ID;
+  }
+
+  //noinspection JSMethodCanBeStatic
+  _getQueryType(query) {
+    if (query.toLowerCase().startsWith('select')) {
+      return 'select';
+    } else if (query.toLowerCase().startsWith('insert')) {
+      return 'insert';
+    } else if (query.toLowerCase().startsWith('update')) {
+      return 'update';
+    } else if (query.toLowerCase().startsWith('delete')) {
+      return 'delete';
+    } else {
+      return null;
+    }
+  }
+
+  /**
+   * @memberof SqliteService.executeSql
+   * @type {Method} executeSql
+   * @param {String} query
+   * @param {Object[]} [parameters]
+   * @returns {Object} promise
+   */
   executeSql(query, parameters) {
     return this._$cordovaSQLite.execute(this._db, query, parameters);
   }
 }
 
-export default ['$q', '$cordovaSQLite', SqliteService];
+export default ['$q', '$cordovaSQLite', 'QUERIES', SqliteService];

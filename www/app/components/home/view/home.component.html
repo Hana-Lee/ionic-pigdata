@@ -3,7 +3,7 @@
     <button class="button" ng-click="vm.addItem()">추가</button>
   </ion-nav-buttons>
 </ion-nav-bar>
-<ion-content padding="false">
+<ion-content padding="false" class="has-tabs">
   <ion-input class="text-center font_bold">
     <ion-item ng-click="vm.showDatePicker()">{{vm.selectedTimestamp | date : 'yyyy-MM-dd'}}</ion-item>
   </ion-input>

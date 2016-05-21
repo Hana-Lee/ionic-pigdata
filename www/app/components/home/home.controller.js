@@ -3,19 +3,19 @@
  * @since 2016-05-16 16:24
  */
 
+import Item from '../../shared/item.vo';
+
 /**
  * @class HomeController
- * @prop {Array} items
- * @prop {Date} selectedTimestamp
- * @prop {Function} ionicDatePicker
  */
 class HomeController {
 
-  constructor(factory, ionicDatePicker) {
+  constructor(factory, ionicDatePicker, $ionicPopup) {
     this.factory = factory;
     this.items = [];
     this.selectedTimestamp = new Date();
     this.ionicDatePicker = ionicDatePicker;
+    this.$ionicPopup = $ionicPopup;
     this.init();
   }
 
@@ -26,14 +26,75 @@ class HomeController {
     });
   }
 
+  //noinspection JSMethodCanBeStatic
   showItemInfo(item) {
     event.stopPropagation();
     console.info('show item info click', item);
+    this._showItemPopup('수정', item.name, item.unit, (name, unit) => {
+      item.name = name;
+      item.unit = unit;
+      this.factory.updateItem(item).then((result) => {
+        console.info('update item result : ', result);
+      }, (err) => {
+        console.error('update item error : ', err);
+      });
+    });
   }
 
-  addItem(event) {
-    event.stopPropagation();
+  /**
+   * @memberof HomeController.addItem
+   */
+  addItem() {
     console.info('add item click');
+    this._showItemPopup('항목 추가', null, 1, (name) => {
+      let newItem = new Item();
+      newItem.name = name;
+      this.factory.createItem(newItem).then((result) => {
+        console.info('create item result : ', result);
+        this.items.push(result);
+      });
+    });
+  }
+
+  _showItemPopup(title, name, unit, callback) {
+    let itemPopup = null;
+    let options = {
+      title : title || '항목 추가',
+      template : '<div class="list">' +
+      '<div class="item item-divider">' +
+      '이름 입력' +
+      '</div>' +
+      '<div class="item item-input-inset"><label class="item-input-wrapper">' +
+      '<input id="item-name" type="text" placeholder="이름을 입력해주세요" value="' + (name || '') + '"></label></div>' +
+      '<div class="item item-divider">' +
+      '단위 설정' +
+      '</div>' +
+      '<div class="item range range-balanced">' +
+      '<label>1</label>' +
+      '<input id="item-unit" type="range" name="volume" min="0" max="10" step="5" value="' + (unit || 1) + '">' +
+      '<label>10</label>' +
+      '</div>' +
+      '</div>',
+      inputPlaceholder : '이름을 입력하세요',
+      scope : null, // Scope (optional). A scope to link to the popup content.
+      buttons : [{ // Array[Object] (optional). Buttons to place in the popup footer.
+        text : 'Cancel',
+        type : 'button-assertive'
+      }, {
+        text : 'OK',
+        type : 'button-positive',
+        onTap : (e) => {
+          e.preventDefault();
+          let nameValue = document.querySelector('#item-name').value;
+          let unitValue = document.querySelector('#item-unit').value;
+          unitValue = unitValue === '0' ? '1' : unitValue;
+          callback(nameValue, unitValue);
+          itemPopup.close();
+        }
+      }]
+    };
+
+    itemPopup = this.$ionicPopup.show(options);
   }
 
   showDatePicker() {
@@ -47,15 +108,17 @@ class HomeController {
     this.selectedTimestamp = value;
   }
 
+  //noinspection JSMethodCanBeStatic
   plus(event) {
     event.stopPropagation();
     console.info('on click plus(+) button');
   }
 
+  //noinspection JSMethodCanBeStatic
   minus(event) {
     event.stopPropagation();
     console.info('on click minus(-) button');
   }
 }
 
-export default ['home.factory', 'ionicDatePicker', HomeController];
+export default ['home.factory', 'ionicDatePicker', '$ionicPopup', HomeController];

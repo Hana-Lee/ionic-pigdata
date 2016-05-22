@@ -28,7 +28,6 @@ class HomeController {
 
   //noinspection JSMethodCanBeStatic
   showItemInfo(item) {
-    event.stopPropagation();
     console.info('show item info click', item);
     this._showItemPopup('수정', item.name, item.unit, (name, unit) => {
       item.name = name;
@@ -106,6 +105,16 @@ class HomeController {
 
   _datePickerCallback(value) {
     this.selectedTimestamp = value;
+  }
+
+  //noinspection JSMethodCanBeStatic
+  deleteItem(item) {
+    console.info('delete click', item);
+    this.factory.deleteItem(item).then((result) => {
+      let itemIndex = this.items.findIndex(i => i.id === item.id);
+      this.items.splice(itemIndex, 1);
+      console.info('item index : ', itemIndex, this.items);
+    }, err => console.error('delete item error : ', err));
   }
 
   //noinspection JSMethodCanBeStatic

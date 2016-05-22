@@ -66,7 +66,7 @@ let homeFactory = function ($q, SqliteService, QUERIES) {
     let deferred = $q.defer();
 
     let params = [
-      item.seq, item.name, item.unit, `${new Date().getTime()}`, item.id
+      item.seq, item.name, item.unit, item.id
     ];
     SqliteService.update(QUERIES.ITEMS.UPDATE_ITEM, params).then((result) => {
       deferred.resolve(result);
@@ -78,6 +78,16 @@ let homeFactory = function ($q, SqliteService, QUERIES) {
   };
 
   let deleteItem = function (item) {
+    let deferred = $q.defer();
+
+    let params = [item.id];
+    SqliteService.update(QUERIES.ITEMS.DELETE_ITEM, params).then((result) => {
+      deferred.resolve(result);
+    }, (err) => {
+      deferred.reject(err);
+    });
+
+    return deferred.promise;
   };
 
   let createItemValue = function (item) {

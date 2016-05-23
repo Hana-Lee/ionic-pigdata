@@ -19,15 +19,21 @@ let homeFactory = function ($q, SqliteService, QUERIES) {
 
   /**
    * @memberof HomeFactory.getAllItem
+   * @param {Date} dateObj
    * @returns {Object} promise
    */
-  let getAllItem = function () {
-    var deferred = $q.defer();
+  let getAllItem = function (dateObj) {
+    let deferred = $q.defer();
 
-    SqliteService.getItems(QUERIES.ITEMS.SELECT_ALL_ITEMS).then((items) => {
+    let from = dateObj.setHours(0, 0, 0, 0);
+    let to = dateObj.setHours(23, 59, 59, 999);
+    let params = [from, to];
+    SqliteService.getItems(QUERIES.ITEMS.SELECT_ALL_ITEMS, params).then((items) => {
       let results = [];
-      for (let i of items) {
-        results.push(new Item(i.id, i.valueId, i.seq, i.name, i.unit, i.value));
+      if (items) {
+        for (let i of items) {
+          results.push(new Item(i.id, i.valueId, i.seq, i.name, i.unit, i.value));
+        }
       }
       deferred.resolve(results);
     });

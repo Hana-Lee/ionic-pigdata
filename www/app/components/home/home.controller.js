@@ -111,6 +111,7 @@ class HomeController {
   showDatePicker() {
     console.info('show date picker');
     this.ionicDatePicker.openDatePicker({
+      inputDate : this.selectedDate,
       callback : (value) => this._datePickerCallback(value)
     });
   }
@@ -124,7 +125,7 @@ class HomeController {
   //noinspection JSMethodCanBeStatic
   deleteItem(item) {
     console.info('delete click', item);
-    this.factory.deleteItem(item).then((result) => {
+    this.factory.deleteItem(item).then(() => {
       let itemIndex = this.items.findIndex(i => i.id === item.id);
       this.items.splice(itemIndex, 1);
       console.info('item index : ', itemIndex, this.items);

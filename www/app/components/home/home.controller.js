@@ -133,15 +133,39 @@ class HomeController {
   }
 
   //noinspection JSMethodCanBeStatic
-  plus(event) {
-    event.stopPropagation();
+  plus(item) {
     console.info('on click plus(+) button');
+    item.value += Number(item.unit);
+    this._updateItemValue(item);
   }
 
   //noinspection JSMethodCanBeStatic
-  minus(event) {
-    event.stopPropagation();
+  minus(item) {
     console.info('on click minus(-) button');
+    item.value -= Number(item.unit);
+    if (item.value < 0) {
+      item.value = 0;
+    }
+    this._updateItemValue(item);
+  }
+
+  _updateItemValue(item) {
+    console.info('_updateItemValue : ', item);
+    if (item.valueId === null) {
+      console.info('create item value');
+
+      let today = new Date();
+      let valueCreatedTime = new Date(this.selectedDate);
+      item.valueTime = valueCreatedTime.setHours(today.getHours(), today.getMinutes(),
+        today.getSeconds(), today.getMilliseconds());
+
+      this.factory.createItemValue(item).then(result => {
+        item.valueId = result.valueId;
+      });
+    } else {
+      console.info('update item value');
+      this.factory.updateItemValue(item);
+    }
   }
 }
 

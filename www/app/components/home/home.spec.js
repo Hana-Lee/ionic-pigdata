@@ -45,8 +45,8 @@ describe('Home', () => {
       expect(controller).to.have.property('ionicDatePicker');
     });
 
-    it('has a selected time stamp property', () => { // erase if removing this.name from the controller
-      expect(controller).to.have.property('selectedTimestamp');
+    it('has a selectedDate property', () => { // erase if removing this.name from the controller
+      expect(controller).to.have.property('selectedDate');
     });
 
     it('has a factory property', () => { // erase if removing this.name from the controller

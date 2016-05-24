@@ -9,7 +9,7 @@
 class Item {
 
   /** @constructor */
-  constructor(id, valueId, seq, name, unit, value) {
+  constructor(id, valueId, seq, name, unit, value, valueTime) {
     /** @member {Number} */
     this.id = id;
     /** @member {Number} */
@@ -22,6 +22,8 @@ class Item {
     this.unit = unit;
     /** @member {Number} */
     this.value = value;
+    /** @member {Number} */
+    this.valueTime = valueTime;
   }
 }
 

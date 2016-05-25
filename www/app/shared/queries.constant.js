@@ -18,7 +18,7 @@ let queries = {
     'ON `i`.`id` = `v`.`item_id` ' +
     'AND `v`.`created` BETWEEN ? AND ? ' +
     'WHERE `i`.`enabled` = 1 ' +
-    'ORDER BY `i`.`seq` ASC;',
+    'ORDER BY `i`.`seq` ASC, `i`.`created` ASC;',
     INSERT_ITEM : 'INSERT INTO `Items` (`seq`, `name`) SELECT MAX(`seq`) + 1, ? FROM `Items`;',
     UPDATE_ITEM : 'UPDATE `Items` SET ' +
     '`seq` = ?, `name` = ?, `unit` = ?, `updated` = STRFTIME(\'%s\', \'now\') || \'000\' ' +

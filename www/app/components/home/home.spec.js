@@ -56,6 +56,10 @@ describe('Home', () => {
     it('has a $ionicPopup property', () => { // erase if removing this.name from the controller
       expect(controller).to.have.property('$ionicPopup');
     });
+
+    it('has a showReorder property', () => { // erase if removing this.name from the controller
+      expect(controller).to.have.property('showReorder');
+    });
   });
 
   describe('Template', () => {

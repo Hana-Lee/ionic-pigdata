@@ -11,7 +11,9 @@ import sass from 'gulp-sass';
 import minifyCss from 'gulp-minify-css';
 import preen from 'preen';
 import notify from 'gulp-notify';
-import util from 'gulp-util';
+import autoprefixer from 'gulp-autoprefixer';
+import sourcemaps from 'gulp-sourcemaps';
+import concat from 'gulp-concat';
 
 let reload = () => serve.reload();
 let root = 'www';
@@ -38,7 +40,8 @@ let paths = {
   entry : path.join(root, 'app/app.js'),
   output : root,
   blankTemplates : path.join(__dirname, 'generator', 'component/**/*.**'),
-  sass : ['./scss/**/*.scss']
+  sass : ['./scss/**/*.scss'],
+  styles : ['./www/scss/*.scss']
 };
 
 // Use webpack.config.js to build modules
@@ -82,7 +85,7 @@ gulp.task('component', () => {
 
 // Compile, minify and rename sass file
 gulp.task('sass', () => {
-  gulp.src('./scss/ionic.app.scss')
+  return gulp.src(paths.sass)
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest('./www/css/'))
     .pipe(minifyCss({
@@ -90,6 +93,22 @@ gulp.task('sass', () => {
     }))
     .pipe(rename({extname : '.min.css'}))
     .pipe(gulp.dest('./www/css/'));
+});
+
+gulp.task('styles', () => {
+  return gulp.src(paths.styles)
+    .pipe(sourcemaps.init())
+    .pipe(sass().on('error', sass.logError))
+    .pipe(autoprefixer('last 2 version'))
+    .pipe(concat('style.css'))
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest('./www/css/'))
+    .pipe(rename({suffix : '.min'}))
+    .pipe(minifyCss({
+      keepSpecialComments : 0
+    }))
+    .pipe(gulp.dest('./www/css/'))
+    .pipe(notify({message : 'Styles builded'}));
 });
 
 gulp.task('preen', () => {
@@ -100,13 +119,13 @@ gulp.task('preen', () => {
 
 // Watching all files and reload server
 gulp.task('watch', () => {
-  let allPaths = [].concat([paths.js], paths.html, [paths.sass]);
-  gulp.watch(allPaths, ['webpack', 'sass', reload]);
+  let allPaths = [].concat([paths.js], paths.html, [paths.sass], [paths.styles]);
+  gulp.watch(allPaths, ['webpack', 'sass', 'styles', reload]);
 });
 
 // Start all tasks
 gulp.task('default', () => {
-  sync('webpack', 'sass', 'preen');
+  sync('webpack', 'sass', 'preen', 'styles');
 });
 
 // Start server

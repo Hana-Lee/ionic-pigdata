@@ -148,13 +148,28 @@ let homeFactory = function ($q, SqliteService, QUERIES) {
     return deferred.promise;
   };
 
+  let updateItems = function(items) {
+    let deferred = $q.defer();
+
+    let updateQueries = [];
+    for (let item of items) {
+      updateQueries.push([QUERIES.ITEMS.UPDATE_ITEM, [item.seq, item.name, item.unit, item.id]]);
+    }
+    
+    SqliteService.batchUpdate(updateQueries)
+      .then((result) => deferred.resolve(result), (err) => deferred.reject(err));
+
+    return deferred.promise;
+  };
+
   return {
     createItem : createItem,
     updateItem : updateItem,
     deleteItem : deleteItem,
     getAllItem : getAllItem,
     createItemValue : createItemValue,
-    updateItemValue : updateItemValue
+    updateItemValue : updateItemValue,
+    updateItems : updateItems
   };
 };
 

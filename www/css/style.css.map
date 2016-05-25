@@ -1,1 +1,0 @@
-{"version":3,"sources":["home.scss"],"names":[],"mappings":"AAAA;EAEI,gBAAgB;EAChB,YAAY;EACZ,wBAAwB,EACzB","file":"style.css","sourcesContent":[".home-view {\n  .item-right-edit {\n    padding-left: 0;\n    width: 42px;\n    background: transparent;\n  }\n}\n"],"sourceRoot":"/source/"}

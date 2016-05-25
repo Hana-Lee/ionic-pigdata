@@ -1,4 +1,7 @@
 <ion-nav-bar class="bar-dark">
+  <ion-nav-buttons side="left">
+    <button class="button" ng-click="vm.showReorder = !vm.showReorder;">순서변경</button>
+  </ion-nav-buttons>
   <ion-nav-buttons side="right">
     <button class="button" ng-click="vm.addItem()">추가</button>
   </ion-nav-buttons>
@@ -7,21 +10,23 @@
   <ion-input class="text-center font_bold">
     <ion-item ng-click="vm.showDatePicker()">{{vm.selectedDate | date : 'yyyy-MM-dd'}}</ion-item>
   </ion-input>
-  <ion-list>
+  <ion-list show-reorder="vm.showReorder">
     <ion-item
       ng-repeat="item in vm.items"
       class="item-remove-animate">
       <div class="row padding_zero">
         <div class="col cursor-pointer" ng-click="vm.showItemInfo(item)">
-          <h2>{{item.name}}</h2>
+          <h2>{{item.seq}}. {{item.name}}</h2>
           <p>횟수 : {{item.value}}</p>
         </div>
         <div class="col padding_zero">
           <div class="button-bar">
-            <a class="button button-positive" ng-click="vm.plus(item)">
+            <a ng-class="{disabled:vm.showReorder}"
+               class="button button-positive" ng-click="vm.plus(item)">
               <i class="icon ion-ios-plus"></i>
             </a>
-            <a ng-class="{disabled:item.value === 0}" class="button button-assertive" ng-click="vm.minus(item)">
+            <a ng-class="{disabled:item.value === 0 || vm.showReorder}"
+               class="button button-assertive" ng-click="vm.minus(item)">
               <i class="icon ion-ios-minus"></i>
             </a>
           </div>
@@ -30,6 +35,9 @@
       <ion-option-button class="button-assertive" ng-click="vm.deleteItem(item)">
         Delete
       </ion-option-button>
+      <ion-reorder-button class="ion-navicon"
+                          on-reorder="vm.onReorderItem(item, $fromIndex, $toIndex)">
+      </ion-reorder-button>
     </ion-item>
   </ion-list>
 </ion-content>

@@ -16,6 +16,7 @@ class HomeController {
     this.selectedDate = new Date();
     this.ionicDatePicker = ionicDatePicker;
     this.$ionicPopup = $ionicPopup;
+    this.showReorder = false;
     this.init();
   }
 
@@ -166,6 +167,39 @@ class HomeController {
       console.info('update item value');
       this.factory.updateItemValue(item);
     }
+  }
+
+  onReorderItem(item, fromIndex, toIndex) {
+    console.info('move item : ', item, fromIndex, toIndex);
+    this._reorderItems(item, fromIndex, toIndex);
+  }
+
+  _reorderItems(item, fromIndex, toIndex) {
+    let prevSeq = item.seq;
+    item.seq = this.items[toIndex].seq;
+
+    let modifiedItems = [item];
+    if (fromIndex < toIndex) {
+      for (let i = (fromIndex + 1); i <= toIndex; i++) {
+        let seq = this.items[i].seq;
+        this.items[i].seq = prevSeq;
+        prevSeq = seq;
+        modifiedItems.push(this.items[i]);
+      }
+    } else {
+      for (let i = (fromIndex - 1); i >= toIndex; i--) {
+        let seq = this.items[i].seq;
+        this.items[i].seq = prevSeq;
+        prevSeq = seq;
+        modifiedItems.push(this.items[i]);
+      }
+    }
+
+    this.factory.updateItems(modifiedItems)
+      .then(() => {
+        this.items.splice(fromIndex, 1);
+        this.items.splice(toIndex, 0, item);
+      }, (err) => console.error(err));
   }
 }
 

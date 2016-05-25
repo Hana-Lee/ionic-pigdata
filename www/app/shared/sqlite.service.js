@@ -22,8 +22,8 @@ class SqliteService {
     const CREATE_TABLE_ITEMS =
       'CREATE TABLE IF NOT EXISTS `Items` (' +
       '`id` INTEGER NOT NULL,' +
-      '`seq` INTEGER NOT NULL UNIQUE,' +
-      '`name` VARCHAR(255) NOT NULL,' +
+      '`seq` INTEGER NOT NULL,' +
+      '`name` VARCHAR(255) NOT NULL UNIQUE,' +
       '`unit` TINYINT NOT NULL DEFAULT (1),' +
       '`enabled` TINYINT NOT NULL DEFAULT (1),' +
       '`created` TIMESTAMP NOT NULL DEFAULT (STRFTIME(\'%s\', \'now\') || \'000\'),' +
@@ -60,20 +60,24 @@ class SqliteService {
       ');';
 
     this._INIT_QUERIES = [
-      CREATE_TABLE_ITEMS, CREATE_TABLE_VALUES, CREATE_TABLE_SETTINGS,
-      'INSERT INTO `Items` (`seq`, `name`) VALUES (0, \'물 마시기\');',
-      'INSERT INTO `Items` (`seq`, `name`) VALUES (1, \'커피 마시기\');',
-      'INSERT INTO `Items` (`seq`, `name`) VALUES (2, \'담배 피우기\');',
-      'INSERT INTO `Items` (`seq`, `name`) VALUES (3, \'사랑한다 말하기\');',
-      'INSERT INTO `Items` (`seq`, `name`) VALUES (4, \'영어단어 외우기\');',
-      'INSERT INTO `Items` (`seq`, `name`) VALUES (5, \'소변 보기\');',
-      'INSERT INTO `Items` (`seq`, `name`) VALUES (6, \'대변 보기\');',
-      'INSERT INTO `Items` (`seq`, `name`) VALUES (7, \'머리 감기\');',
-      'INSERT INTO `Items` (`seq`, `name`) VALUES (8, \'샤워 하기\');',
-      'INSERT INTO `Items` (`seq`, `name`) VALUES (9, \'양치질 하기\');',
-      'INSERT INTO `Settings` (`code`, `name`, `type`, `opt_code`, `opt_name`, `value`) VALUES' +
-      '(\'tab_position\', \'탭위치\', \'choice\', \'top|bottom\', \'상단|하단\', \'bottom\');'
+      CREATE_TABLE_ITEMS, CREATE_TABLE_VALUES, CREATE_TABLE_SETTINGS
     ];
+
+    let names = [
+      '물 마시기', '커피 마시기', '담배 피우기', '사랑한다 말하기', '영어단어 외우기',
+      '소변 보기', '대변 보기', '머리 감기', '샤워 하기', '양치질 하기'
+    ];
+
+    for (let i = 0; i < names.length; i++) {
+      let template = 'INSERT INTO `Items` (`seq`, `name`) ' +
+        'SELECT ' + (i + 1) + ', \'' + names[i] + '\' ' +
+        'WHERE NOT EXISTS (SELECT 1 FROM `Items` WHERE `name` = \'' + names[i] + '\');';
+      this._INIT_QUERIES.push(template);
+    }
+
+    this._INIT_QUERIES.push('INSERT INTO `Settings` (`code`, `name`, `type`, `opt_code`, `opt_name`, `value`) VALUES' +
+      '(\'tab_position\', \'탭위치\', \'choice\', \'top|bottom\', \'상단|하단\', \'bottom\');');
+
     this.preloadDataBase();
   }
 
@@ -218,6 +222,28 @@ class SqliteService {
       deferred.reject(error);
     });
 
+    return deferred.promise;
+  }
+
+  /**
+   * @memberof SqliteService.batchUpdate
+   * @type {Method} batchUpdate
+   * @param {Array[]} queries
+   * @returns {Promise} promise
+   */
+  batchUpdate(queries) {
+    let deferred = this._$q.defer();
+
+    if (window.sqlitePlugin !== undefined) {
+      this._db.sqlBatch(queries, (res) => deferred.resolve(res), (err) => deferred.reject(err));
+    } else {
+      this._db.transaction((tx) => {
+        console.info('batch update transaction');
+        for (let query of queries) {
+          tx.executeSql(query[0], query[1]);
+        }
+      }, (err) => deferred.reject(err), () => deferred.resolve('Batch update OK'));
+    }
     return deferred.promise;
   }
 

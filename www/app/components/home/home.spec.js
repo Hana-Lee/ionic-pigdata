@@ -11,8 +11,8 @@ import HomeController from './home.controller';
 import HomeFactory from './home.factory';
 import HomeComponent from './home.component';
 import SqliteService from '../../shared/sqlite.service';
-import HomeTemplateComponent from './view/home.component.html';
 //noinspection JSUnresolvedVariable
+import HomeTemplateComponent from './view/home.component.html';
 
 describe('Home', () => {
   let $rootScope, uiRouter = 'ui.router', controller, ionic = 'ionic', ngCordova = 'ngCordova';

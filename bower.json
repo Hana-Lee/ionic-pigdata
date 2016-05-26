@@ -7,16 +7,22 @@
     "ionic-datepicker": "^1.1.0",
     "ngCordova": "^0.1.26-alpha"
   },
-  "preen" : {
-    "ngCordova" : [
+  "preen": {
+    "ngCordova": [
       "dist/ng-cordova.js",
       "dist/ng-cordova.min.js"
     ],
     "ionic-platform-web-client": [
       "dist/ionic.io.bundle.*"
     ],
-    "ionic-datepicker":[
+    "ionic-datepicker": [
       "dist/ionic-datepicker.bundle.*"
+    ],
+    "nvd3" : [
+      "build/*"
     ]
+  },
+  "dependencies": {
+    "nvd3": "^1.8.3"
   }
 }

@@ -3,6 +3,8 @@
  * @since 2016-05-16 17:00
  */
 
+import d3 from 'd3';
+
 /**
  * @class DetailsController
  * @prop {Array} chats
@@ -11,10 +13,12 @@ class DetailsController {
   constructor(factory) {
     console.info('details controller constructor');
     this.chats = factory.all();
+    this.viewType = 'week';
     this.options = {
       chart : {
         type : 'discreteBarChart',
         height : 500,
+        valueFormat : d3.format(','),
         x : (d) => {
           return d.label;
         },
@@ -25,48 +29,30 @@ class DetailsController {
         staggerLabels : true,
         duration : 600,
         transitionDuration : 350,
-        showValues : true
+        showValues : true,
+        yAxis : {
+          tickFormat : d3.format(',')
+        }
       }
     };
-    this.data = [
-      {
-        key : 'Cumulative Return',
-        values : [
-          {
-            'label' : 'A Label',
-            'value' : -29.765957771107
-          },
-          {
-            'label' : 'B Label',
-            'value' : 0
-          },
-          {
-            'label' : 'C Label',
-            'value' : 32.807804682612
-          },
-          {
-            'label' : 'D Label',
-            'value' : 196.45946739256
-          },
-          {
-            'label' : 'E Label',
-            'value' : 0.19434030906893
-          },
-          {
-            'label' : 'F Label',
-            'value' : -98.079782601442
-          },
-          {
-            'label' : 'G Label',
-            'value' : -13.925743130903
-          },
-          {
-            'label' : 'H Label',
-            'value' : -5.1387322875705
-          }
-        ]
-      }
-    ];
+    this.data = [{
+      key : '3',
+      values : [{
+        'label' : '5월 23일(월)', 'value' : 19
+      }, {
+        'label' : '5월 24일(화)', 'value' : 10
+      }, {
+        'label' : '5월 5일(수)', 'value' : 15
+      }, {
+        'label' : '5월 26일(목)', 'value' : 11
+      }, {
+        'label' : '5월 27일(금)', 'value' : 13
+      }, {
+        'label' : '5월 28일(토)', 'value' : 13
+      }, {
+        'label' : '5월 29일(일)', 'value' : 14
+      }]
+    }];
   }
 }
 

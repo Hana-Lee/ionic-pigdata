@@ -343,6 +343,7 @@ nbactions.xml
 # Linux trash folder which might appear on any partition or disk
 .Trash-*
 
+# Custom setting
 www/lib
 www/bundle.*
 www/css

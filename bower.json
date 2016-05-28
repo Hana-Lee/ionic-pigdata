@@ -18,11 +18,18 @@
     "ionic-datepicker": [
       "dist/ionic-datepicker.bundle.*"
     ],
-    "nvd3" : [
+    "nvd3": [
       "build/*"
+    ],
+    "angular-momentjs": [
+      "angular-momentjs.js",
+      "angular-momentjs.min.js",
+      "angular-momentjs.min.js.map"
     ]
   },
   "dependencies": {
-    "nvd3": "^1.8.3"
+    "nvd3": "^1.8.3",
+    "moment": "^2.13.0",
+    "angular-momentjs": "^0.2.2"
   }
 }

@@ -3,57 +3,41 @@
  * @since 2016-05-16 17:00
  */
 
-import d3 from 'd3';
-
 /**
  * @class DetailsController
- * @prop {Array} chats
+ * @prop {Object} factory
+ * @prop {ItemService} ItemService
+ * @prop {Item[]} items
+ * @prop {String} viewType
+ * @prop {Object} chart
+ * @prop {Item} selectedItem
  */
 class DetailsController {
-  constructor(factory) {
-    console.info('details controller constructor');
-    this.chats = factory.all();
+
+  /**
+   * @constructor
+   * @param {Object} factory
+   * @param {ItemService} ItemService
+   */
+  constructor(factory, ItemService) {
+    this.factory = factory;
+    this.ItemService = ItemService;
+    this.items = [];
     this.viewType = 'week';
-    this.options = {
-      chart : {
-        type : 'discreteBarChart',
-        height : 500,
-        valueFormat : d3.format(','),
-        x : (d) => {
-          return d.label;
-        },
-        y : (d) => {
-          return d.value;
-        },
-        showLabels : true,
-        staggerLabels : true,
-        duration : 600,
-        transitionDuration : 350,
-        showValues : true,
-        yAxis : {
-          tickFormat : d3.format(',')
-        }
-      }
-    };
-    this.data = [{
-      key : '3',
-      values : [{
-        'label' : '5월 23일(월)', 'value' : 19
-      }, {
-        'label' : '5월 24일(화)', 'value' : 10
-      }, {
-        'label' : '5월 5일(수)', 'value' : 15
-      }, {
-        'label' : '5월 26일(목)', 'value' : 11
-      }, {
-        'label' : '5월 27일(금)', 'value' : 13
-      }, {
-        'label' : '5월 28일(토)', 'value' : 13
-      }, {
-        'label' : '5월 29일(일)', 'value' : 14
-      }]
-    }];
+    this.chart = {};
+    this.selectedItem = null;
+
+    this._init();
+  }
+
+  _init() {
+    this.ItemService.getAllItem(new Date()).then((result) => {
+      this.items = result;
+      this.selectedItem = this.items[0];
+      this.factory.createChartStructure(this.items[0], this.viewType)
+        .then((result) => this.chart = result, (err) => console.error(err));
+    }, (err) => console.error('get all item error : ', err));
   }
 }
 
-export default ['details.factory', DetailsController];
+export default ['details.factory', 'ItemService', DetailsController];

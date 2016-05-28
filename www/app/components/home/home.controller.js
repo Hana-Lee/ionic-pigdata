@@ -10,13 +10,14 @@ import Item from '../../shared/item.vo';
  */
 class HomeController {
 
-  constructor(factory, ionicDatePicker, $ionicPopup) {
+  constructor(factory, ionicDatePicker, $ionicPopup, ItemService) {
     this.factory = factory;
     this.items = [];
     this.selectedDate = new Date();
     this.ionicDatePicker = ionicDatePicker;
     this.$ionicPopup = $ionicPopup;
     this.showReorder = false;
+    this.ItemService = ItemService;
     this.init();
   }
 
@@ -25,7 +26,7 @@ class HomeController {
   }
 
   _getAllItem() {
-    this.factory.getAllItem(this.selectedDate).then((items) => {
+    this.ItemService.getAllItem(this.selectedDate).then((items) => {
       console.info('items result : ', items);
       this.items = items;
     });
@@ -203,4 +204,4 @@ class HomeController {
   }
 }
 
-export default ['home.factory', 'ionicDatePicker', '$ionicPopup', HomeController];
+export default ['home.factory', 'ionicDatePicker', '$ionicPopup', 'ItemService', HomeController];

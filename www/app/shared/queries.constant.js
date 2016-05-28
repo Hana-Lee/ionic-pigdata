@@ -5,6 +5,7 @@
 
 let queries = {
   ITEMS : {
+    SELECT_ONLY_ITEM_BY_ID : 'SELECT `id`, `seq`, `name`, `unit`, `created` FROM `Items` WHERE `id` = ?;',
     SELECT_BY_ID : 'SELECT `i`.`id`, `v`.`id` AS `valueId`, `i`.`seq`, ' +
     '`i`.`name`, `i`.`unit`, IFNULL(`v`.`value`, 0) AS `value`, `v`.`created` AS valueTime ' +
     'FROM `Items` as `i` LEFT OUTER JOIN `Values` as `v` ' +
@@ -29,6 +30,8 @@ let queries = {
   },
   VALUES : {
     SELECT_BY_ID : 'SELECT `id` AS `valueId`, `item_id` AS `itemId`, `value` FROM `Values` WHERE `id` = ?;',
+    SELECT_BY_ITEM_ID_AND_PERIOD : 'SELECT `id`, `item_id` AS `itemId`, `value`, `created` ' +
+    'FROM `Values` WHERE `item_id` = ? AND `created` BETWEEN ? AND ? ORDER BY `created` ASC;',
     INSERT_ITEM_VALUE : 'INSERT INTO `Values` (`item_id`, `value`, `created`) VALUES (?, ?, ?);',
     UPDATE_ITEM_VALUE : 'UPDATE `Values` SET `value` = ?, `updated` = STRFTIME(\'%s\', \'now\') || \'000\' ' +
     'WHERE `id` = ?;'

@@ -13,38 +13,12 @@ import Item from '../../shared/item.vo';
  * @param {Object} QUERIES
  * @returns {
  *  {
- *  createItem: Function, updateItem: Function, deleteItem: Function, getAllItem: Function,
+ *  createItem: Function, updateItem: Function, deleteItem: Function,
  *  createItemValue: Function, updateItemValue: Function
  *  }
  * }
  */
 let homeFactory = function ($q, SqliteService, QUERIES) {
-
-  /**
-   * @memberof HomeFactory.getAllItem
-   * @type {Function} getAllItem
-   * @param {Date} dateObj
-   * @returns {Object} promise
-   */
-  let getAllItem = function (dateObj) {
-    let deferred = $q.defer();
-
-    let query = QUERIES.ITEMS.SELECT_ALL_ITEMS;
-    let from = dateObj.setHours(0, 0, 0, 0);
-    let to = dateObj.setHours(23, 59, 59, 999);
-    let params = [from, to];
-    SqliteService.getItems(query, params).then((items) => {
-      let results = [];
-      if (items) {
-        for (let i of items) {
-          results.push(new Item(i.id, i.valueId, i.seq, i.name, i.unit, i.value, i.valueTime));
-        }
-      }
-      deferred.resolve(results);
-    }, (err) => deferred.reject(err));
-
-    return deferred.promise;
-  };
 
   /**
    * @memberof HomeFactory.createItem
@@ -155,7 +129,7 @@ let homeFactory = function ($q, SqliteService, QUERIES) {
     for (let item of items) {
       updateQueries.push([QUERIES.ITEMS.UPDATE_ITEM, [item.seq, item.name, item.unit, item.id]]);
     }
-    
+
     SqliteService.batchUpdate(updateQueries)
       .then((result) => deferred.resolve(result), (err) => deferred.reject(err));
 
@@ -166,7 +140,6 @@ let homeFactory = function ($q, SqliteService, QUERIES) {
     createItem : createItem,
     updateItem : updateItem,
     deleteItem : deleteItem,
-    getAllItem : getAllItem,
     createItemValue : createItemValue,
     updateItemValue : updateItemValue,
     updateItems : updateItems

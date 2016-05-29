@@ -8,32 +8,31 @@ module.exports = function (config) {
     frameworks : ['mocha', 'chai'],
 
     // list of files/patterns to load in the browser
-    files : [
-      {
-        pattern : './www/lib/ionic/js/ionic.bundle.js',
-        watched : false, include : true, served : true, nocache : false
-      },
-      {
-        pattern : './www/lib/ionic-platform-web-client/dist/ionic.io.bundle.js',
-        watched : false, include : true, served : true, nocache : false
-      },
-      {
-        pattern : './www/lib/ngCordova/dist/ng-cordova.js',
-        watched : false, include : true, served : true, nocache : false
-      },
-      {
-        pattern : './www/lib/ionic-datepicker/dist/ionic-datepicker.bundle.min.js',
-        watched : false, include : true, served : true, nocache : false
-      },
-      {
-        pattern : './node_modules/angular-mocks/angular-mocks.js',
-        watched : false, include : true, served : true, nocache : false
-      },
-      {
-        pattern : 'spec.bundle.js',
-        watched : false, include : true, served : true, nocache : false
-      }
-    ],
+    files : [{
+      pattern : './www/lib/ionic/js/ionic.bundle.js',
+      watched : false, include : true, served : true, nocache : false
+    }, {
+      pattern : './www/lib/ionic-platform-web-client/dist/ionic.io.bundle.js',
+      watched : false, include : true, served : true, nocache : false
+    }, {
+      pattern : './www/lib/ngCordova/dist/ng-cordova.js',
+      watched : false, include : true, served : true, nocache : false
+    }, {
+      pattern : './www/lib/ionic-datepicker/dist/ionic-datepicker.bundle.min.js',
+      watched : false, include : true, served : true, nocache : false
+    }, {
+      pattern : './node_modules/angular-mocks/angular-mocks.js',
+      watched : false, include : true, served : true, nocache : false
+    }, {
+      pattern : './www/lib/moment/min/moment-with-locales.min.js',
+      watched : false, include : true, served : true, nocache : false
+    }, {
+      pattern : './www/lib/angular-momentjs/angular-momentjs.min.js',
+      watched : false, include : true, served : true, nocache : false
+    }, {
+      pattern : 'spec.bundle.js',
+      watched : false, include : true, served : true, nocache : false
+    }],
 
     // files to exclude
     exclude : [],

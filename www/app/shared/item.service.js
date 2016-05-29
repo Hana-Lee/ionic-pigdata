@@ -48,6 +48,26 @@ class ItemService {
 
     return deferred.promise;
   }
+
+  getItem(itemId, dateObj) {
+    console.info('item service get all item');
+    let deferred = this.$q.defer();
+
+    let query = this.QUERIES.ITEMS.SELECT_BY_ID;
+    let from = dateObj.setHours(0, 0, 0, 0);
+    let to = dateObj.setHours(23, 59, 59, 999);
+    let params = [from, to, itemId];
+    this.SqliteService.getItem(query, params).then((result) => {
+      let newItem = null;
+      if (result) {
+        newItem = new Item(result.id, result.valueId, result.seq, result.name, 
+          result.unit, result.value, result.valueTime);
+      }
+      deferred.resolve(newItem);
+    }, (err) => deferred.reject(err));
+
+    return deferred.promise;
+  }
 }
 
 export default ['$q', 'SqliteService', 'QUERIES', ItemService];

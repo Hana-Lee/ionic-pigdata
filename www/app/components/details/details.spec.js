@@ -25,15 +25,15 @@ describe('Details', () => {
   beforeEach(window.module(angularMoment));
   beforeEach(window.module(DetailsModule.name));
 
-  beforeEach(inject((_$q_, _$cordovaSQLite_, _$moment_) => {
+  beforeEach(inject((_$q_, _$cordovaSQLite_, _$moment_, _$stateParams_) => {
     let SqliteService = SqliteServiceModule.slice(SqliteServiceModule.length -1).pop();
     let ItemService = ItemServiceModule.slice(ItemServiceModule.length - 1).pop();
     let factory = DetailsFactory.slice(DetailsFactory.length - 1).pop();
     let Controller = DetailsController.slice(DetailsController.length - 1).pop();
-    
+
     controller = new Controller(
       factory(), new ItemService(_$q_, new SqliteService(_$q_, _$cordovaSQLite_, QUERIES), QUERIES),
-      _$moment_
+      _$moment_, _$stateParams_
     );
   }));
 
@@ -51,8 +51,12 @@ describe('Details', () => {
       expect(controller).to.have.property('ItemService');
     });
 
-    it('has a items property', () => {
-      expect(controller).to.have.property('items');
+    it('has a $stateParams property', () => {
+      expect(controller).to.have.property('$stateParams');
+    });
+
+    it('has a selectedItemId property', () => {
+      expect(controller).to.have.property('selectedItemId');
     });
 
     it('has a viewType property', () => {

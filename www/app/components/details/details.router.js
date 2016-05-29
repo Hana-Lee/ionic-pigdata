@@ -8,7 +8,7 @@ import config from '../../shared/config';
 let detailsRouter = function ($stateProvider) {
   $stateProvider
     .state('base.details', {
-      url : '/details', views : {
+      url : '/details/:selectedItemId', views : {
         'base-details' : {
           templateUrl : `${config.pathTemplate}/details/view/details.html`
         }

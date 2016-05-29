@@ -16,7 +16,7 @@ let onReady = function ($ionicPlatform, SqliteService) {
     }
 
     //noinspection JSUnresolvedFunction
-    SqliteService.preloadDataBase(true);
+    SqliteService.preloadDataBase();
   });
 };
 

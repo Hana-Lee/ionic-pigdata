@@ -1,21 +1,48 @@
-<ion-tabs class="tabs-icon-top tabs-color-active-positive">
+<ion-side-menus enable-menu-with-back-views="false">
+  <ion-side-menu-content>
+    <ion-nav-bar class="bar-stable">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
 
-  <ion-tab title="수집"
-           icon-off="ion-ios-list-outline" icon-on="ion-ios-list-outline"
-           href="#/base/home">
-    <ion-nav-view name="base-home"></ion-nav-view>
-  </ion-tab>
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        </button>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+    <!-- tabs -->
+    <ion-tabs class="tabs-icon-top tabs-color-active-positive">
 
-  <ion-tab title="상세보기"
-           icon-off="ion-ios-pie-outline" icon-on="ion-ios-pie-outline"
-           href="#/base/details">
-    <ion-nav-view name="base-details"></ion-nav-view>
-  </ion-tab>
+      <ion-tab title="수집"
+               icon-off="ion-ios-list-outline" icon-on="ion-ios-list-outline"
+               href="#/base/home">
+        <ion-nav-view name="base-home"></ion-nav-view>
+      </ion-tab>
 
-  <ion-tab title="설정"
-           icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear"
-           href="#/base/settings">
-    <ion-nav-view name="base-settings"></ion-nav-view>
-  </ion-tab>
+      <ion-tab title="상세보기"
+               icon-off="ion-ios-pie-outline" icon-on="ion-ios-pie-outline"
+               href="#/base/details/{{vm.firstItem.id}}">
+        <ion-nav-view name="base-details"></ion-nav-view>
+      </ion-tab>
 
-</ion-tabs>
+      <ion-tab title="설정"
+               icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear"
+               href="#/base/settings">
+        <ion-nav-view name="base-settings"></ion-nav-view>
+      </ion-tab>
+
+    </ion-tabs>
+  </ion-side-menu-content>
+
+  <ion-side-menu side="left" class="dark">
+    <ion-header-bar class="bar-stable bar-dark">
+      <h1 class="title">항목 리스트</h1>
+    </ion-header-bar>
+    <ion-content>
+      <ion-list>
+        <ion-item ng-repeat="item in vm.items" menu-close href="#/base/details/{{item.id}}">
+          {{item.seq}}. {{item.name}}
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>

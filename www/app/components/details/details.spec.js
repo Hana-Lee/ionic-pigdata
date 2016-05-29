@@ -16,20 +16,24 @@ import DetailsComponent from './details.component';
 import DetailsTemplateComponent from './view/details.component.html';
 
 describe('Details', () => {
-  let uiRouter = 'ui.router', controller, ionic = 'ionic', ngCordova = 'ngCordova';
+  let uiRouter = 'ui.router', controller, ionic = 'ionic', ngCordova = 'ngCordova',
+    angularMoment = 'angular-moment';
 
   beforeEach(window.module(ionic));
   beforeEach(window.module(ngCordova));
   beforeEach(window.module(uiRouter));
+  beforeEach(window.module(angularMoment));
   beforeEach(window.module(DetailsModule.name));
-  
-  beforeEach(inject((_$q_, _$cordovaSQLite_) => {
+
+  beforeEach(inject((_$q_, _$cordovaSQLite_, _$moment_) => {
     let SqliteService = SqliteServiceModule.slice(SqliteServiceModule.length -1).pop();
     let ItemService = ItemServiceModule.slice(ItemServiceModule.length - 1).pop();
     let factory = DetailsFactory.slice(DetailsFactory.length - 1).pop();
     let Controller = DetailsController.slice(DetailsController.length - 1).pop();
+    
     controller = new Controller(
-      factory(), new ItemService(_$q_, new SqliteService(_$q_, _$cordovaSQLite_, QUERIES), QUERIES)
+      factory(), new ItemService(_$q_, new SqliteService(_$q_, _$cordovaSQLite_, QUERIES), QUERIES),
+      _$moment_
     );
   }));
 
@@ -61,6 +65,14 @@ describe('Details', () => {
 
     it('has a selectedItem property', () => {
       expect(controller).to.have.property('selectedItem');
+    });
+
+    it('has a selectedDateString property', () => {
+      expect(controller).to.have.property('selectedDateString');
+    });
+
+    it('has a $moment property', () => {
+      expect(controller).to.have.property('$moment');
     });
   });
 

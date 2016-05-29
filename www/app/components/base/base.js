@@ -4,8 +4,10 @@
  */
 
 import router from './base.router';
+import controller from './base.controller';
 
 let baseModule = angular.module('PIGDATA.base', [])
-  .config(router);
+  .config(router)
+  .controller('base.controller', controller);
 
 export default baseModule;

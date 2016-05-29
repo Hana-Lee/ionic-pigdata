@@ -9,7 +9,8 @@ let baseRouter = function ($stateProvider) {
   $stateProvider
     .state('base', {
       url : '/base', abstract : true,
-      templateUrl : `${config.pathTemplate}/base/view/base.html`
+      templateUrl : `${config.pathTemplate}/base/view/base.html`,
+      controller : 'base.controller', controllerAs : 'vm'
     });
 };
 

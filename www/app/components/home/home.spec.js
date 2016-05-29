@@ -10,24 +10,33 @@ import HomeModule from './home';
 import HomeController from './home.controller';
 import HomeFactory from './home.factory';
 import HomeComponent from './home.component';
-import SqliteService from '../../shared/sqlite.service';
+import SqliteServiceModule from '../../shared/sqlite.service';
+import ItemServiceModule from '../../shared/item.service';
 //noinspection JSUnresolvedVariable
 import HomeTemplateComponent from './view/home.component.html';
 
 describe('Home', () => {
-  let $rootScope, uiRouter = 'ui.router', controller, ionic = 'ionic', ngCordova = 'ngCordova';
+  let uiRouter = 'ui.router', controller, ionic = 'ionic', ngCordova = 'ngCordova';
 
-  beforeEach(window.module(ionic));
-  beforeEach(window.module(ngCordova));
   beforeEach(window.module(uiRouter));
+  beforeEach(window.module(ngCordova));
+  beforeEach(window.module(ionic));
   beforeEach(window.module(HomeModule.name));
-  beforeEach(inject((_$rootScope_, _$q_, _$cordovaSQLite_) => {
-    $rootScope = _$rootScope_;
-    let Service = SqliteService.slice(SqliteService.length - 1).pop();
-    let sqliteService = new Service(_$q_, _$cordovaSQLite_);
+
+  beforeEach(inject((_$q_, _$cordovaSQLite_, _$ionicPopup_) => {
+    let ItemService = ItemServiceModule.slice(ItemServiceModule.length - 1).pop();
+    let SqliteService = SqliteServiceModule.slice(SqliteServiceModule.length - 1).pop();
+    let sqliteService = new SqliteService(_$q_, _$cordovaSQLite_);
     let factory = HomeFactory.slice(HomeFactory.length - 1).pop();
     let Controller = HomeController.slice(HomeController.length - 1).pop();
-    controller = new Controller(factory(_$q_, sqliteService, QUERIES));
+
+    //factory, ionicDatePicker, $ionicPopup, ItemService
+    controller = new Controller(
+      factory(_$q_, sqliteService, QUERIES),
+      null, //ionicDatePicker
+      _$ionicPopup_,
+      new ItemService(_$q_, new SqliteService(_$q_, _$cordovaSQLite_, QUERIES), QUERIES)
+    );
   }));
 
   describe('Module', () => {
@@ -36,29 +45,33 @@ describe('Home', () => {
 
   describe('Controller', () => {
     // controller specs
-    it('has a items property', () => { // erase if removing this.name from the controller
+    it('has a items property', () => {
       /** @prop {Object} have */
       expect(controller).to.have.property('items');
     });
 
-    it('has a ionic date picker property', () => { // erase if removing this.name from the controller
+    it('has a ionic date picker property', () => {
       expect(controller).to.have.property('ionicDatePicker');
     });
 
-    it('has a selectedDate property', () => { // erase if removing this.name from the controller
+    it('has a selectedDate property', () => {
       expect(controller).to.have.property('selectedDate');
     });
 
-    it('has a factory property', () => { // erase if removing this.name from the controller
+    it('has a factory property', () => {
       expect(controller).to.have.property('factory');
     });
 
-    it('has a $ionicPopup property', () => { // erase if removing this.name from the controller
+    it('has a $ionicPopup property', () => {
       expect(controller).to.have.property('$ionicPopup');
     });
 
-    it('has a showReorder property', () => { // erase if removing this.name from the controller
+    it('has a showReorder property', () => {
       expect(controller).to.have.property('showReorder');
+    });
+
+    it('has a ItemService property', () => {
+      expect(controller).to.have.property('ItemService');
     });
   });
 

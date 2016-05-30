@@ -1,8 +1,0 @@
-<h1 class="text-center">{{vm.selectedItem.name}}</h1>
-<h3 class="text-center">{{vm.selectedDateString}}</h3>
-<nvd3 options="vm.chart.options" data="vm.chart.data"></nvd3>
-<div class="button-bar padding">
-  <a grouped-radio="'year'" ng-model="vm.viewType" ng-change="vm.onChangeViewType()">연단위</a>
-  <a grouped-radio="'month'" ng-model="vm.viewType" ng-change="vm.onChangeViewType()">월단위</a>
-  <a grouped-radio="'week'" ng-model="vm.viewType" ng-change="vm.onChangeViewType()">주단위</a>
-</div>

@@ -23,17 +23,20 @@ class DetailsController {
    * @param {ItemService} ItemService
    * @param {Function} $moment
    * @param {Object} $stateParams
+   * @param {Object} ionicDatePicker
    */
-  constructor(factory, ItemService, $moment, $stateParams) {
+  constructor(factory, ItemService, $moment, $stateParams, ionicDatePicker) {
     this.factory = factory;
     this.ItemService = ItemService;
     this.$stateParams = $stateParams;
     this.selectedItemId = $stateParams.selectedItemId;
+    this.ionicDatePicker = ionicDatePicker;
     this.viewType = 'week';
     this.chart = {};
     this.selectedItem = null;
     this.$moment = $moment;
-    this.selectedDateString = `${this.$moment().week() - 1}주차`;
+    this.selectedMoment = this.$moment();
+    this.selectedDateString = `${this.selectedMoment.week() - 1}주차`;
 
     console.info('state param : ', $stateParams, $stateParams.itemId);
     this._init();
@@ -43,7 +46,7 @@ class DetailsController {
     console.info('details controller initialize');
     this.ItemService.getItem(this.selectedItemId, new Date()).then((result) => {
       this.selectedItem = result;
-      this.factory.createChartStructure(this.selectedItem, this.viewType)
+      this.factory.createChartStructure(this.selectedItem, this.viewType, this.selectedMoment.toDate())
         .then((result) => this.chart = result, (err) => console.error(err));
     }, (err) => console.error('get all item error : ', err));
   }
@@ -51,15 +54,32 @@ class DetailsController {
   onChangeViewType() {
     console.info('on change view type : ', this.viewType);
     if (this.viewType === 'week') {
-      this.selectedDateString = `${this.$moment().week() - 1}주차`;
+      this.selectedDateString = `${this.selectedMoment.week() - 1}주차`;
     } else if (this.viewType === 'month') {
-      this.selectedDateString = `${new Date().getMonth() + 1}월`;
+      this.selectedDateString = `${this.selectedMoment.month() + 1}월`;
     } else if (this.viewType === 'year') {
-      this.selectedDateString = `${new Date().getFullYear()}년`;
+      this.selectedDateString = `${this.selectedMoment.year()}년`;
     }
-    this.factory.createChartStructure(this.selectedItem, this.viewType)
+    this.factory.createChartStructure(this.selectedItem, this.viewType, this.selectedMoment.toDate())
       .then((result) => this.chart = result, (err) => console.error(err));
+  }
+
+  showDatePicker() {
+    console.info('show date picker');
+    this.ionicDatePicker.openDatePicker({
+      inputDate : this.selectedMoment.toDate(),
+      callback : (value) => this._datePickerCallback(value)
+    });
+  }
+
+  _datePickerCallback(value) {
+    console.info('date picker callback : ', value);
+    this.selectedMoment = this.$moment(new Date(value));
+    this.onChangeViewType();
   }
 }
 
-export default ['details.factory', 'ItemService', '$moment', '$stateParams', DetailsController];
+export default [
+  'details.factory', 'ItemService', '$moment', '$stateParams', 'ionicDatePicker',
+  DetailsController
+];

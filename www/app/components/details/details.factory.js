@@ -55,9 +55,10 @@ let detailsFactory = function ($q, ValueService, $moment) {
    * @memberof DetailsFactory.createChartStructure
    * @param {Item} item
    * @param {String} viewType
+   * @param {Date} selectedDate
    * @returns {Promise} promise object
    */
-  let createChartStructure = function (item, viewType) {
+  let createChartStructure = function (item, viewType, selectedDate) {
     // TODO 이 함수 전체적으로 리팩토링 할것.
     let deferred = $q.defer();
     let chartOptions = defaultChartOptions;
@@ -66,12 +67,12 @@ let detailsFactory = function ($q, ValueService, $moment) {
       values : []
     }];
 
-    let from = $moment().startOf(viewType);
-    let to = $moment().endOf(viewType);
+    let from = $moment(selectedDate).startOf(viewType);
+    let to = $moment(selectedDate).endOf(viewType);
 
     if (viewType === 'week' && (from.day() === 0)) {
-      from = $moment().add(-1, 'days').startOf(viewType);
-      to = $moment().add(-1, 'days').endOf(viewType);
+      from = $moment(selectedDate).add(-1, 'days').startOf(viewType);
+      to = $moment(selectedDate).add(-1, 'days').endOf(viewType);
     }
 
     if (viewType === 'week') {

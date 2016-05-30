@@ -10,7 +10,8 @@ let detailsRouter = function ($stateProvider) {
     .state('base.details', {
       url : '/details/:selectedItemId', views : {
         'base-details' : {
-          templateUrl : `${config.pathTemplate}/details/view/details.html`
+          templateUrl : `${config.pathTemplate}/details/view/details.html`,
+          controller : 'details.controller', controllerAs : 'vm'
         }
       }
     });

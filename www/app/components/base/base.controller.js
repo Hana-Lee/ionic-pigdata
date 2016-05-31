@@ -13,17 +13,27 @@ class BaseController {
 
   /**
    * @constructor
+   * @param {Object} $scope
+   * @param {Object} $ionicSideMenuDelegate
    * @param {ItemService} ItemService
    */
-  constructor(ItemService) {
+  constructor($scope, $ionicSideMenuDelegate, ItemService) {
     this.items = [];
     this.firstItem = null;
     this.ItemService = ItemService;
+
+    $scope.$watch(() => {
+      return $ionicSideMenuDelegate.isOpenLeft();
+    }, (isOpen) => this._onSideMenuOpen(isOpen));
 
     this._init();
   }
 
   _init() {
+    this._itemsInitialize();
+  }
+
+  _itemsInitialize() {
     this.ItemService.getAllItem(new Date())
       .then((result) => {
         this.items = result;
@@ -32,6 +42,12 @@ class BaseController {
         }
       }, (err) => console.error(err));
   }
+
+  _onSideMenuOpen(isOpen) {
+    if (isOpen) {
+      this._itemsInitialize();
+    }
+  }
 }
 
-export default ['ItemService', BaseController];
+export default ['$scope', '$ionicSideMenuDelegate', 'ItemService', BaseController];

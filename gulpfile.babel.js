@@ -10,7 +10,6 @@ import yargs from 'yargs';
 import sass from 'gulp-sass';
 import minifyCss from 'gulp-minify-css';
 import preen from 'preen';
-import notify from 'gulp-notify';
 import autoprefixer from 'gulp-autoprefixer';
 import sourcemaps from 'gulp-sourcemaps';
 import concat from 'gulp-concat';
@@ -107,13 +106,12 @@ gulp.task('styles', () => {
     .pipe(minifyCss({
       keepSpecialComments : 0
     }))
-    .pipe(gulp.dest('./www/css/'))
-    .pipe(notify({message : 'Styles builded'}));
+    .pipe(gulp.dest('./www/css/'));
 });
 
 gulp.task('preen', () => {
   preen.preen({}, () => {
-    gulp.src('').pipe(notify({message : 'Lib builded'}));
+    gulp.src('');
   });
 });
 

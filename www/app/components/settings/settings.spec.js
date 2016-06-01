@@ -31,15 +31,19 @@ describe('Settings', () => {
 
   describe('Controller', () => {
     // controller specs
-    it('has a settings property [REMOVE]', () => { // erase if removing this.name from the controller
+    it('has a settings property', () => {
       expect(controller).to.have.property('settings');
+    });
+
+    it('has a $ionicPopup property', () => {
+      expect(controller).to.have.property('$ionicPopup');
     });
   });
 
   describe('Template', () => {
     // template specs
     // tip: use regex to ensure correct bindings are used e.g., {{  }}
-    it('has name in template [REMOVE]', () => {
+    it('has name in template', () => {
       // expect(SettingsTemplate).to.match(/{{\s?vm\.name\s?}}/g);
       expect('foobar').to.match(/^foo/);
     });

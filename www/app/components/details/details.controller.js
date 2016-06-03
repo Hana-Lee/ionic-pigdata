@@ -25,12 +25,12 @@ class DetailsController {
    * @param {Object} $stateParams
    * @param {Object} ionicDatePicker
    */
-  constructor(factory, ItemService, $moment, $stateParams, ionicDatePicker) {
+  constructor(factory, ItemService, $moment, $stateParams, DatePickerService) {
     this.factory = factory;
     this.ItemService = ItemService;
     this.$stateParams = $stateParams;
     this.selectedItemId = $stateParams.selectedItemId;
-    this.ionicDatePicker = ionicDatePicker;
+    this.DatePickerService = DatePickerService;
     this.viewType = 'week';
     this.chart = {};
     this.selectedItem = null;
@@ -65,11 +65,9 @@ class DetailsController {
   }
 
   showDatePicker() {
-    console.info('show date picker');
-    this.ionicDatePicker.openDatePicker({
-      inputDate : this.selectedMoment.toDate(),
-      callback : (value) => this._datePickerCallback(value)
-    });
+    this.DatePickerService.showDatePicker({
+      inputDate : this.selectedMoment.toDate()
+    }, (value) => this._datePickerCallback(value));
   }
 
   _datePickerCallback(value) {
@@ -80,6 +78,6 @@ class DetailsController {
 }
 
 export default [
-  'details.factory', 'ItemService', '$moment', '$stateParams', 'ionicDatePicker',
+  'details.factory', 'ItemService', '$moment', '$stateParams', 'DatePickerService',
   DetailsController
 ];

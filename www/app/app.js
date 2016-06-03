@@ -6,6 +6,7 @@
 import SqliteService from './shared/sqlite.service.js';
 import ItemService from './shared/item.service';
 import ValueService from './shared/value.service';
+import DatePickerService from './shared/datepicker.service';
 import Components from './components/components';
 import onReady from './bootstrap';
 import config from './app.config';
@@ -19,4 +20,5 @@ angular.module('PIGDATA', moduleList)
   .config(config)
   .service('SqliteService', SqliteService)
   .service('ItemService', ItemService)
-  .service('ValueService', ValueService);
+  .service('ValueService', ValueService)
+  .service('DatePickerService', DatePickerService);

@@ -4,7 +4,7 @@
  */
 
 /**
- * @class
+ * @class Value
  * @prop {String} label
  * @prop {Object} value
  */

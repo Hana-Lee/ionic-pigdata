@@ -4,7 +4,7 @@
  */
 
 /**
- * @class
+ * @class MomentPeriod
  * @prop {Object} from - moment object
  * @prop {Object} to - moment object
  */

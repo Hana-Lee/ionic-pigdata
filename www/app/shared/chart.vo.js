@@ -6,9 +6,9 @@
 import d3 from 'd3';
 
 /**
- * @class
- * @prop {Object} [options]
+ * @class Chart
  * @prop {Array} data
+ * @prop {Object} [options]
  */
 class Chart {
   /**

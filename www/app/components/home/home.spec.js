@@ -50,8 +50,8 @@ describe('Home', () => {
       expect(controller).to.have.property('items');
     });
 
-    it('has a ionic date picker property', () => {
-      expect(controller).to.have.property('ionicDatePicker');
+    it('has a DatePickerService property', () => {
+      expect(controller).to.have.property('DatePickerService');
     });
 
     it('has a selectedDate property', () => {

@@ -59,8 +59,8 @@ describe('Details', () => {
       expect(controller).to.have.property('selectedItemId');
     });
 
-    it('has a ionicDatePicker property', () => {
-      expect(controller).to.have.property('ionicDatePicker');
+    it('has a DatePickerService property', () => {
+      expect(controller).to.have.property('DatePickerService');
     });
 
     it('has a viewType property', () => {

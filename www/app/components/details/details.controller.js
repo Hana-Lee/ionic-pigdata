@@ -23,9 +23,10 @@ class DetailsController {
    * @param {ItemService} ItemService
    * @param {Function} $moment
    * @param {Object} $stateParams
-   * @param {Object} ionicDatePicker
+   * @param {Object} DatePickerService
+   * @param {Object} pdLog
    */
-  constructor(factory, ItemService, $moment, $stateParams, DatePickerService) {
+  constructor(factory, ItemService, $moment, $stateParams, DatePickerService, pdLog) {
     this.factory = factory;
     this.ItemService = ItemService;
     this.$stateParams = $stateParams;
@@ -37,13 +38,12 @@ class DetailsController {
     this.$moment = $moment;
     this.selectedMoment = this.$moment();
     this.selectedDateString = `${this.selectedMoment.week() - 1}주차`;
+    this.pdLog = pdLog;
 
-    console.info('state param : ', $stateParams, $stateParams.itemId);
     this._init();
   }
 
   _init() {
-    console.info('details controller initialize');
     this.ItemService.getItem(this.selectedItemId, new Date()).then((result) => {
       this.selectedItem = result;
       this.factory.createChartStructure(this.selectedItem, this.viewType, this.selectedMoment.toDate())
@@ -52,7 +52,6 @@ class DetailsController {
   }
 
   onChangeViewType() {
-    console.info('on change view type : ', this.viewType);
     if (this.viewType === 'week') {
       this.selectedDateString = `${this.selectedMoment.week() - 1}주차`;
     } else if (this.viewType === 'month') {
@@ -71,13 +70,13 @@ class DetailsController {
   }
 
   _datePickerCallback(value) {
-    console.info('date picker callback : ', value);
+    this.pdLog.debug('date picker callback : ', value);
     this.selectedMoment = this.$moment(new Date(value));
     this.onChangeViewType();
   }
 }
 
 export default [
-  'details.factory', 'ItemService', '$moment', '$stateParams', 'DatePickerService',
+  'details.factory', 'ItemService', '$moment', '$stateParams', 'DatePickerService', 'pdLog',
   DetailsController
 ];

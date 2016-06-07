@@ -4,13 +4,13 @@
  */
 
 /* jshint -W064 */
-/*globals describe, beforeEach, it */
 import QUERIES from '../../shared/queries.constant';
 import SqliteServiceModule from '../../shared/sqlite.service';
 import ItemServiceModule from '../../shared/item.service';
 import DetailsModule from './details';
 import DetailsController from './details.controller';
 import DetailsFactory from './details.factory';
+import LogProvider from '../../shared/log.provider';
 // import DetailsComponent from './details.component';
 //noinspection JSUnresolvedVariable
 // import DetailsTemplateComponent from './view/details.component.html';
@@ -26,14 +26,16 @@ describe('Details', () => {
   beforeEach(window.module(DetailsModule.name));
 
   beforeEach(inject((_$q_, _$cordovaSQLite_, _$moment_, _$stateParams_) => {
-    let SqliteService = SqliteServiceModule.slice(SqliteServiceModule.length -1).pop();
+    let SqliteService = SqliteServiceModule.slice(SqliteServiceModule.length - 1).pop();
     let ItemService = ItemServiceModule.slice(ItemServiceModule.length - 1).pop();
     let factory = DetailsFactory.slice(DetailsFactory.length - 1).pop();
+    let Log = LogProvider.slice(LogProvider.length - 1).pop();
+    let pdLog = new Log();
     let Controller = DetailsController.slice(DetailsController.length - 1).pop();
 
     controller = new Controller(
-      factory(), new ItemService(_$q_, new SqliteService(_$q_, _$cordovaSQLite_, QUERIES), QUERIES),
-      _$moment_, _$stateParams_
+      factory(), new ItemService(_$q_, new SqliteService(_$q_, _$cordovaSQLite_, QUERIES, pdLog), QUERIES),
+      _$moment_, _$stateParams_, null, pdLog
     );
   }));
 
@@ -85,6 +87,10 @@ describe('Details', () => {
 
     it('has a selectedDateString property', () => {
       expect(controller).to.have.property('selectedDateString');
+    });
+
+    it('has a pdLog property', () => {
+      expect(controller).to.have.property('pdLog');
     });
   });
 

@@ -10,7 +10,15 @@ import Item from '../../shared/item.vo';
  */
 class HomeController {
 
-  constructor(factory, DatePickerService, $ionicPopup, ItemService) {
+  /**
+   * @constructor
+   * @param factory
+   * @param DatePickerService
+   * @param $ionicPopup
+   * @param ItemService
+   * @param pdLog
+   */
+  constructor(factory, DatePickerService, $ionicPopup, ItemService, pdLog) {
     this.factory = factory;
     this.items = [];
     this.selectedDate = new Date();
@@ -18,6 +26,8 @@ class HomeController {
     this.$ionicPopup = $ionicPopup;
     this.showReorder = false;
     this.ItemService = ItemService;
+    this.pdLog = pdLog;
+    
     this.init();
   }
 
@@ -39,7 +49,7 @@ class HomeController {
         item.name = name;
         item.unit = unit;
         this.factory.updateItem(item).then((result) => {
-          console.info('update item result : ', result);
+          this.pdLog.debug('update item result : ', result);
         }, (err) => {
           console.error('update item error : ', err);
         });
@@ -200,4 +210,7 @@ class HomeController {
   }
 }
 
-export default ['home.factory', 'DatePickerService', '$ionicPopup', 'ItemService', HomeController];
+export default [
+  'home.factory', 'DatePickerService', '$ionicPopup', 'ItemService', 'pdLog', 
+  HomeController
+];

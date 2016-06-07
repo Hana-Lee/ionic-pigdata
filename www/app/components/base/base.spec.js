@@ -4,11 +4,7 @@
  */
 
 /* jshint -W064 */
-/*globals describe, beforeEach, it */
-//noinspection JSUnresolvedVariable
 import BaseModule from './base';
-//noinspection JSUnresolvedVariable
-import BaseTemplate from './view/base.html';
 
 describe('Base', () => {
   let $rootScope, uiRouter = 'ui.router';

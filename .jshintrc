@@ -61,6 +61,7 @@
     "translateChat": false,
     "io": false,
     "ionic": false,
-    "inject": false
+    "inject": false,
+    "pgDebug": false
   }
 }

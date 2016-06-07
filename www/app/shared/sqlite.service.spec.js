@@ -4,17 +4,22 @@
  */
 
 /* jshint -W064 */
-/*globals describe, beforeEach, it */
+import QUERIES from './queries.constant';
 import SqliteService from './sqlite.service';
+import LogProvider from './log.provider';
 
 describe('SqliteService', () => {
-  let service;
+  let service, ionic = 'ionic', ngCordova = 'ngCordova';
 
-  // beforeEach(window.module('PIGDATA'));
+  beforeEach(window.module(ngCordova));
+  beforeEach(window.module(ionic));
 
-  beforeEach(inject((_$q_) => {
+  beforeEach(inject((_$q_, _$cordovaSQLite_) => {
     let Service = SqliteService.slice(SqliteService.length - 1).pop();
-    service = new Service(_$q_);
+    let Log = LogProvider.slice(LogProvider.length - 1).pop();
+    let pdLog = new Log();
+
+    service = new Service(_$q_, _$cordovaSQLite_, QUERIES, pdLog);
   }));
 
   describe('Service', () => {
@@ -32,6 +37,10 @@ describe('SqliteService', () => {
 
     it('has a _INIT_QUERIES property', () => {
       expect(service).to.have.property('_INIT_QUERIES');
+    });
+
+    it('has a _pdLog property', () => {
+      expect(service).to.have.property('_pdLog');
     });
   });
 });

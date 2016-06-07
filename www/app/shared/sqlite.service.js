@@ -9,7 +9,7 @@
 class SqliteService {
 
   /** @constructor */
-  constructor($q, $cordovaSQLite, QUERIES) {
+  constructor($q, $cordovaSQLite, QUERIES, pdLog) {
     /** @member {Object} */
     this._db = undefined;
     /** @member {Object} */
@@ -18,6 +18,7 @@ class SqliteService {
     this._$cordovaSQLite = $cordovaSQLite;
     /** @member {Object} */
     this._QUERIES = QUERIES;
+    this._pdLog = pdLog;
 
     const CREATE_TABLE_ITEMS =
       'CREATE TABLE IF NOT EXISTS `Items` (' +
@@ -90,12 +91,12 @@ class SqliteService {
     let deferred = this._$q.defer();
     if (!this._db) {
       if (window.sqlitePlugin !== undefined) {
-        console.info('window sqlite plugin use');
+        this._pdLog.debug('window sqlite plugin use');
         let params = {name : 'pigdata.db', location : 2, createFromLocation : 1};
         this._db = window.sqlitePlugin.openDatabase(params);
       } else {
         // For debugging in the browser
-        console.info('window open database use');
+        this._pdLog.debug('window open database use');
         this._db = window.openDatabase('pigdata.db', '1.0', 'Database', 200000);
         this._initData().then(
           (result) => {
@@ -118,19 +119,19 @@ class SqliteService {
    */
   _initData() {
     let deferred = this._$q.defer();
-    console.info('%c *** Starting the creation of the database in the browser *** ',
+    this._pdLog.debug('%c *** Starting the creation of the database in the browser *** ',
       'background: #222; color: #bada55');
     this._db.transaction((tx) => {
       for (let i = 0; i < this._INIT_QUERIES.length; i++) {
         let query = this._INIT_QUERIES[i].replace(/\\n/g, '\n');
 
-        console.info(this._INIT_QUERIES[i]);
+        this._pdLog.debug(this._INIT_QUERIES[i]);
         tx.executeSql(query);
       }
     }, (error) => {
       deferred.reject(error);
     }, () => {
-      console.info('%c *** Completing the creation of the database in the browser *** ',
+      this._pdLog.debug('%c *** Completing the creation of the database in the browser *** ',
         'background: #222; color: #bada55');
       deferred.resolve('OK');
     });
@@ -238,7 +239,7 @@ class SqliteService {
       this._db.sqlBatch(queries, (res) => deferred.resolve(res), (err) => deferred.reject(err));
     } else {
       this._db.transaction((tx) => {
-        console.info('batch update transaction');
+        this._pdLog.debug('batch update transaction');
         for (let query of queries) {
           tx.executeSql(query[0], query[1]);
         }
@@ -294,4 +295,4 @@ class SqliteService {
   }
 }
 
-export default ['$q', '$cordovaSQLite', 'QUERIES', SqliteService];
+export default ['$q', '$cordovaSQLite', 'QUERIES', 'pdLog', SqliteService];

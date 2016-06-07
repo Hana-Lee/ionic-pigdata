@@ -14,14 +14,11 @@ let detailsComponentAttr = function () {
     link : (scope, element, attrs, ngModelCtrl) => {
       element.addClass('button');
       element.on('click', () => {
-        console.info('scope : ', scope);
         // scope.$apply(() => controller.$setViewValue(scope.value));
         ngModelCtrl.$setViewValue(scope.value);
-        console.info('controller : ', ngModelCtrl);
       });
 
       scope.$watch('model', (newValue) => {
-        console.info('new value : ', newValue, scope.value);
         element.removeClass('button-positive');
         if (newValue === scope.value) {
           element.addClass('button-positive');

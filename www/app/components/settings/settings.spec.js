@@ -4,7 +4,6 @@
  */
 
 /* jshint -W064 */
-/*globals describe, beforeEach, it */
 import SettingsModule from './settings';
 import SettingsController from './settings.controller';
 import SettingsFactory from './settings.factory';

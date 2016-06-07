@@ -4,7 +4,6 @@
  */
 
 /* jshint -W064 */
-/*globals describe, beforeEach, it */
 import QUERIES from '../../shared/queries.constant';
 import HomeModule from './home';
 import HomeController from './home.controller';
@@ -12,6 +11,7 @@ import HomeFactory from './home.factory';
 import HomeComponent from './home.component';
 import SqliteServiceModule from '../../shared/sqlite.service';
 import ItemServiceModule from '../../shared/item.service';
+import LogProvider from '../../shared/log.provider';
 //noinspection JSUnresolvedVariable
 import HomeTemplateComponent from './view/home.component.html';
 
@@ -24,9 +24,11 @@ describe('Home', () => {
   beforeEach(window.module(HomeModule.name));
 
   beforeEach(inject((_$q_, _$cordovaSQLite_, _$ionicPopup_) => {
+    let Log = LogProvider.slice(LogProvider.length - 1).pop();
+    let pdLog = new Log();
     let ItemService = ItemServiceModule.slice(ItemServiceModule.length - 1).pop();
     let SqliteService = SqliteServiceModule.slice(SqliteServiceModule.length - 1).pop();
-    let sqliteService = new SqliteService(_$q_, _$cordovaSQLite_);
+    let sqliteService = new SqliteService(_$q_, _$cordovaSQLite_, QUERIES, pdLog);
     let factory = HomeFactory.slice(HomeFactory.length - 1).pop();
     let Controller = HomeController.slice(HomeController.length - 1).pop();
 
@@ -35,7 +37,7 @@ describe('Home', () => {
       factory(_$q_, sqliteService, QUERIES),
       null, //ionicDatePicker
       _$ionicPopup_,
-      new ItemService(_$q_, new SqliteService(_$q_, _$cordovaSQLite_, QUERIES), QUERIES)
+      new ItemService(_$q_, sqliteService, QUERIES)
     );
   }));
 
@@ -72,6 +74,10 @@ describe('Home', () => {
 
     it('has a ItemService property', () => {
       expect(controller).to.have.property('ItemService');
+    });
+
+    it('has a pdLog property', () => {
+      expect(controller).to.have.property('pdLog');
     });
   });
 

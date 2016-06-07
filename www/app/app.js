@@ -11,11 +11,13 @@ import Components from './components/components';
 import onReady from './bootstrap';
 import config from './app.config';
 import QUERIES from './shared/queries.constant';
+import Log from './shared/log.provider';
 
 let moduleList = ['ionic', 'ngCordova', 'ionic-datepicker', 'angular-momentjs', Components.name];
 
 angular.module('PIGDATA', moduleList)
   .constant('QUERIES', QUERIES)
+  .provider('pdLog', Log)
   .run(onReady)
   .config(config)
   .service('SqliteService', SqliteService)

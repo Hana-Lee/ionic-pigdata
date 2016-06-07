@@ -29,7 +29,6 @@ class ItemService {
    * @returns {Promise} promise object
    */
   getAllItem(dateObj) {
-    console.info('item service get all item');
     let deferred = this.$q.defer();
 
     let query = this.QUERIES.ITEMS.SELECT_ALL_ITEMS;
@@ -50,7 +49,6 @@ class ItemService {
   }
 
   getItem(itemId, dateObj) {
-    console.info('item service get all item');
     let deferred = this.$q.defer();
 
     let query = this.QUERIES.ITEMS.SELECT_BY_ID;

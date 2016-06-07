@@ -4,11 +4,13 @@
  */
 
 let router = function ($urlRouterProvider, $ionicConfigProvider, $compileProvider,
-                       ionicDatePickerProvider) {
+                       ionicDatePickerProvider, pdLogProvider) {
   _configRouter();
   _configWhiteList();
   _configDefault();
   _configDatePicker();
+
+  pdLogProvider.setEnable(false);
 
   function _configRouter() {
     $urlRouterProvider.otherwise('/base/home');
@@ -143,5 +145,5 @@ let router = function ($urlRouterProvider, $ionicConfigProvider, $compileProvide
 
 export default [
   '$urlRouterProvider', '$ionicConfigProvider', '$compileProvider',
-  'ionicDatePickerProvider', router
+  'ionicDatePickerProvider', 'pdLogProvider', router
 ];

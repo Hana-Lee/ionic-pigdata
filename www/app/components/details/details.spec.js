@@ -3,7 +3,6 @@
  * @since 2016-05-16 17:00
  */
 
-/* jshint -W064 */
 import QUERIES from '../../shared/queries.constant';
 import SqliteServiceModule from '../../shared/sqlite.service';
 import ItemServiceModule from '../../shared/item.service';

@@ -3,7 +3,6 @@
  * @since 2016-05-19 20:36
  */
 
-/* jshint -W064 */
 import QUERIES from './queries.constant';
 import SqliteService from './sqlite.service';
 import LogProvider from './log.provider';

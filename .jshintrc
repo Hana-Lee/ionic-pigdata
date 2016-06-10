@@ -49,7 +49,6 @@
   "supernew": false,
   "validthis": false,
   "noyield": false,
-
   "browser": true,
   "node": true,
   "jasmine": true,

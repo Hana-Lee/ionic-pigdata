@@ -3,7 +3,6 @@
  * @since 2016-05-16 17:00
  */
 
-/* jshint -W064 */
 import BaseModule from './base';
 
 describe('Base', () => {

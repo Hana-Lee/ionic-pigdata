@@ -3,7 +3,6 @@
  * @since 2016-05-16 16:26
  */
 
-/* jshint -W064 */
 import QUERIES from '../../shared/queries.constant';
 import HomeModule from './home';
 import HomeController from './home.controller';
